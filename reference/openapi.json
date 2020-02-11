@@ -45,9 +45,48 @@
       "get": {
         "summary": "Your GET endpoint",
         "tags": [],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "symbol": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "example": {
+                    "value": [
+                      {
+                        "id": 1,
+                        "name": "Bitcoin",
+                        "symbol": "BTC"
+                      },
+                      {
+                        "id": 3,
+                        "name": "Ethereum",
+                        "symbol": "ETH"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
         "operationId": "get-price",
-        "description": "List available currencies"
+        "description": "Returns a list of all supported currencies. Always use the id's gathered here to lookup data for specific currencies. "
       },
       "parameters": []
     },
@@ -91,8 +130,29 @@
       "get": {
         "summary": "Your GET endpoint",
         "tags": [],
-        "responses": {},
-        "operationId": "get-currencies-id-metadata"
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": ""
+                }
+              }
+            }
+          },
+          "": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/currency-metadata"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-currencies-id-metadata",
+        "description": "Retrun the metadata for selected currency"
       }
     },
     "/currencies/{id}/sparkline": {
@@ -121,21 +181,14 @@
         "operationId": "get-currencies-ticker"
       }
     },
-    "/market/fcas": {
+    "/market": {
       "get": {
         "summary": "Your GET endpoint",
         "tags": [],
         "responses": {},
         "operationId": "get-market-fcas"
-      }
-    },
-    "/market/fear-and-greed": {
-      "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
-        "responses": {},
-        "operationId": "get-market-fear-and-greed"
-      }
+      },
+      "parameters": []
     },
     "/exchanges": {
       "get": {
@@ -159,8 +212,28 @@
       "get": {
         "summary": "Your GET endpoint",
         "tags": [],
-        "responses": {},
-        "operationId": "get-exchanges-id-metadata"
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/currency-metadata"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-exchanges-id-metadata",
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "id"
+          }
+        ]
       }
     },
     "/social/twitter": {
@@ -669,6 +742,97 @@
         },
         "description": "Market volume metrics represented in USD",
         "x-examples": {}
+      },
+      "currency-metadata": {
+        "title": "currency-metadata",
+        "type": "object",
+        "properties": {
+          "currency_id": {
+            "type": "string"
+          },
+          "image_url": {
+            "type": "string"
+          },
+          "bio_short": {
+            "type": "string"
+          },
+          "bio_long": {
+            "type": "string"
+          },
+          "bio_keywords": {
+            "type": "string"
+          },
+          "hq_location": {
+            "type": "string"
+          },
+          "vertical_types": {
+            "type": "array",
+            "items": {}
+          },
+          "links": {
+            "$ref": "#/components/schemas/links"
+          },
+          "communities": {
+            "$ref": "#/components/schemas/communities"
+          }
+        },
+        "description": "Returns the metadata for a list of specific currency"
+      },
+      "links": {
+        "title": "links",
+        "type": "object",
+        "properties": {
+          "currency_id": {
+            "type": "string"
+          },
+          "link_type": {
+            "type": "string",
+            "enum": [
+              "website",
+              "email",
+              "explorer",
+              "whitepaper",
+              "wallet",
+              "github",
+              "announcement",
+              "bounty-program"
+            ]
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "description": "Returns links related to the currency"
+      },
+      "communities": {
+        "title": "communities",
+        "type": "object",
+        "properties": {
+          "currency_id": {
+            "type": "integer"
+          },
+          "link-type": {
+            "type": "string",
+            "enum": [
+              "discord",
+              "telegram",
+              "facebook",
+              "forum",
+              "medium",
+              "slack",
+              "twitter",
+              "reddit",
+              "bitcoin-talk",
+              "instagram"
+            ]
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "description": "Return the communities related to the currency"
       }
     },
     "securitySchemes": {
