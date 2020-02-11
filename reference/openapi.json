@@ -1,0 +1,482 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Crypto Investor API",
+    "description": "API for fetching cryptocurrency price, market and news information.",
+    "contact": {
+      "email": "api@cryptoinvestor.stram"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.cryptoinvestor.stream/v1",
+      "description": "CryptoInverstor.stream API"
+    }
+  ],
+  "tags": [
+    {
+      "name": "private",
+      "description": "Secured Admin-only calls"
+    },
+    {
+      "name": "partners",
+      "description": "Operations available to registered partners"
+    },
+    {
+      "name": "public",
+      "description": "Public accessable calls."
+    }
+  ],
+  "paths": {
+    "/news": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-news"
+      }
+    },
+    "/currencies": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-price"
+      },
+      "parameters": []
+    },
+    "/news/sources": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-news-sources"
+      }
+    },
+    "/price/{symbol}/sparkline": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "symbol",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-price-symbol-sparkline"
+      }
+    },
+    "/currencies/{id}/metadata": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-currencies-id-metadata"
+      }
+    },
+    "/currencies/{id}/sparkline": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-currencies-id-sparkline"
+      }
+    },
+    "/currencies/ticker": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-currencies-ticker"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "newsItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 23
+          },
+          "source": {
+            "type": "integer",
+            "format": "int32",
+            "example": 2
+          },
+          "projects": {
+            "$ref": "#/components/schemas/project"
+          },
+          "categories": {
+            "$ref": "#/components/schemas/categories"
+          },
+          "tags": {
+            "$ref": "#/components/schemas/tags"
+          },
+          "link": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://www.newsbtc.com/2020/02/10/bitcoin-plunges-4-percent-bounces-back-10000-bull-trend-intact/"
+          },
+          "title": {
+            "type": "string",
+            "format": "byte"
+          },
+          "excerpt": {
+            "type": "string",
+            "format": "byte"
+          },
+          "full_article": {
+            "type": "string",
+            "format": "byte"
+          },
+          "publish_date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sentiment": {
+            "type": "string",
+            "format": "byte"
+          },
+          "expert_level": {
+            "type": "string",
+            "format": "byte"
+          }
+        }
+      },
+      "tweets": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 2
+          },
+          "source": {
+            "$ref": "#/components/schemas/twitterSource"
+          },
+          "categories": {
+            "$ref": "#/components/schemas/categories"
+          },
+          "projects": {
+            "$ref": "#/components/schemas/project"
+          },
+          "tags": {
+            "$ref": "#/components/schemas/tags"
+          },
+          "message": {
+            "type": "string",
+            "format": "byte"
+          },
+          "message_id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1197150607519305700
+          },
+          "publish_date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sentiment": {
+            "type": "string",
+            "format": "byte"
+          },
+          "retweet_count": {
+            "type": "integer",
+            "format": "int32",
+            "example": 323
+          },
+          "favorite_count": {
+            "type": "integer",
+            "format": "int32",
+            "example": 2332
+          },
+          "expert_level": {
+            "type": "string",
+            "format": "byte"
+          }
+        }
+      },
+      "twitterSource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 3
+          },
+          "username": {
+            "type": "string",
+            "format": "byte"
+          },
+          "region": {
+            "type": "string",
+            "format": "byte"
+          },
+          "bio": {
+            "type": "string",
+            "format": "byte"
+          },
+          "active": {
+            "type": "boolean",
+            "example": false
+          }
+        }
+      },
+      "tags": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 2
+          },
+          "name": {
+            "type": "string",
+            "format": "byte"
+          }
+        }
+      },
+      "categories": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 2
+          },
+          "name": {
+            "type": "string",
+            "format": "byte"
+          }
+        }
+      },
+      "newsSource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 2
+          },
+          "name": {
+            "type": "string",
+            "format": "byte"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "example": "www.newsbtc.com"
+          }
+        }
+      },
+      "project": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 3
+          },
+          "name": {
+            "type": "string",
+            "format": "byte"
+          },
+          "image-url": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/btc.svg"
+          },
+          "bio_short": {
+            "type": "string",
+            "format": "byte"
+          },
+          "bio_long": {
+            "type": "string",
+            "format": "byte"
+          },
+          "hq_location": {
+            "type": "string",
+            "format": "byte"
+          },
+          "platform": {
+            "type": "integer",
+            "format": "int32",
+            "example": 23
+          },
+          "platform-token-address": {
+            "type": "string",
+            "format": "byte"
+          }
+        }
+      },
+      "price": {
+        "type": "object",
+        "properties": {
+          "project_id": {
+            "type": "integer"
+          },
+          "symbol": {
+            "type": "string"
+          },
+          "price_change_1m": {
+            "type": "number"
+          },
+          "price_change_2m": {
+            "type": "number"
+          },
+          "price_change_3m": {
+            "type": "number"
+          },
+          "price_change_4m": {
+            "type": "number"
+          },
+          "price_change_5m": {
+            "type": "number"
+          },
+          "price_change_10m": {
+            "type": "number"
+          },
+          "price_change_15m": {
+            "type": "number"
+          },
+          "price_change_30m": {
+            "type": "number"
+          },
+          "price_change_1h": {
+            "type": "number"
+          },
+          "price_change_4h": {
+            "type": "number"
+          },
+          "price_change_1d": {
+            "type": "number"
+          },
+          "price_change_7d": {
+            "type": "number"
+          },
+          "price_change_30d": {
+            "type": "number"
+          },
+          "open_day": {
+            "type": "number"
+          },
+          "high_day": {
+            "type": "number"
+          },
+          "low_day": {
+            "type": "number"
+          },
+          "open_24h": {
+            "type": "number"
+          },
+          "high_24": {
+            "type": "number"
+          },
+          "low_24h": {
+            "type": "number"
+          },
+          "open_hour": {
+            "type": "number"
+          },
+          "high_hour": {
+            "type": "number"
+          },
+          "low_hour": {
+            "type": "number"
+          },
+          "volume_hour": {
+            "type": "number"
+          },
+          "volume_24h": {
+            "type": "number"
+          },
+          "circulating_supply": {
+            "type": "number"
+          },
+          "market_cap": {
+            "type": "number"
+          },
+          "last_update": {
+            "type": "string"
+          }
+        },
+        "description": ""
+      },
+      "fearAndGreed": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "integer",
+            "format": "int32",
+            "example": 23
+          },
+          "value_classification": {
+            "type": "string",
+            "format": "byte"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "priceSparkline": {
+        "title": "priceSparkline",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "api_key": {
+        "name": "API Key",
+        "type": "apiKey",
+        "in": "query"
+      },
+      "API-KEY": {
+        "name": "API Key",
+        "type": "apiKey",
+        "in": "header"
+      }
+    }
+  }
+}
