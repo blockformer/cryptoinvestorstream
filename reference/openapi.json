@@ -46,7 +46,8 @@
         "summary": "Your GET endpoint",
         "tags": [],
         "responses": {},
-        "operationId": "get-price"
+        "operationId": "get-price",
+        "description": "List available currencies"
       },
       "parameters": []
     },
@@ -118,6 +119,56 @@
         "tags": [],
         "responses": {},
         "operationId": "get-currencies-ticker"
+      }
+    },
+    "/market/fcas": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-market-fcas"
+      }
+    },
+    "/market/fear-and-greed": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-market-fear-and-greed"
+      }
+    },
+    "/exchanges": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-exchanges"
+      }
+    },
+    "/exchanges/{id}/metadata": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-exchanges-id-metadata"
+      }
+    },
+    "/social/twitter": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-social-twitter"
       }
     }
   },
@@ -253,7 +304,8 @@
             "type": "boolean",
             "example": false
           }
-        }
+        },
+        "description": "Returns all twitter sources crypto investor stream uses"
       },
       "tags": {
         "type": "object",
@@ -343,7 +395,8 @@
             "type": "string",
             "format": "byte"
           }
-        }
+        },
+        "title": ""
       },
       "price": {
         "type": "object",
@@ -464,6 +517,158 @@
             "type": "string"
           }
         }
+      },
+      "exchange": {
+        "title": "exchange",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "region": {
+            "type": [
+              "string",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "country": {
+            "type": "string"
+          },
+          "volume_24h": {
+            "type": "number"
+          },
+          "volumen_7d": {
+            "type": "number"
+          },
+          "volume_30d": {
+            "type": "number"
+          },
+          "volume_24_change_percent": {
+            "type": "number"
+          },
+          "volume_7d_change_percent": {
+            "type": "number"
+          },
+          "volume_30d_change_percent": {
+            "type": "number"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "last_update": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "fcas": {
+        "title": "fcas",
+        "type": "object",
+        "properties": {
+          "project_id": {
+            "type": "integer"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "score": {
+            "type": "integer"
+          },
+          "grade": {
+            "type": "integer"
+          }
+        },
+        "description": "FCAS ratings for all available currencies"
+      },
+      "currencies": {
+        "title": "currencies",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "symbol": {
+            "type": "string"
+          },
+          "circulating_supply": {
+            "type": "string"
+          },
+          "total_supply": {
+            "type": "string"
+          },
+          "max_supply": {
+            "type": "string"
+          },
+          "ath_usd": {
+            "type": "string"
+          },
+          "marketcap_usd": {
+            "type": "string"
+          },
+          "project": {
+            "$ref": "#/components/schemas/project"
+          }
+        }
+      },
+      "market-metrics": {
+        "title": "market-metrics",
+        "type": "object",
+        "description": "Global market metrics",
+        "properties": {
+          "id": {},
+          "fead-and-greed": {
+            "$ref": "#/components/schemas/fearAndGreed"
+          },
+          "bitcoin_dominance": {
+            "type": "string"
+          },
+          "total_cryptocurrencries": {
+            "type": "string"
+          },
+          "btc_dominance": {
+            "type": "string"
+          },
+          "eth_dominance": {
+            "type": "string"
+          },
+          "active_cryptocurrencies": {
+            "type": "string"
+          },
+          "total_exchanges": {
+            "type": "string"
+          }
+        }
+      },
+      "market-volume": {
+        "title": "volume",
+        "type": "object",
+        "properties": {
+          "total_market_cap": {
+            "type": "string"
+          },
+          "total_volume_24h": {
+            "type": "string"
+          },
+          "total_volume_24h_reported": {
+            "type": "string"
+          },
+          "altcoin_volume_24h": {
+            "type": "string"
+          },
+          "altcoin_volume_24h_reported": {
+            "type": "string"
+          }
+        },
+        "description": "Market volume metrics represented in USD",
+        "x-examples": {}
       }
     },
     "securitySchemes": {
