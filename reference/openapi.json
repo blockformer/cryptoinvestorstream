@@ -249,7 +249,30 @@
               ]
             },
             "in": "query",
-            "name": "timeframe"
+            "name": "timeframe",
+            "description": "timeframe to return the sparkline data for"
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "id",
+            "description": "currency id to return sparkline data for"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "start-time"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "end-time"
           }
         ]
       }
@@ -351,6 +374,26 @@
         "description": "Returns the latest global cryptocurrency market metrics. Use the \"convert\" option to return market values in multiple fiat and cryptocurrency conversions in the same call."
       },
       "parameters": []
+    },
+    "/news/categories": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/categories"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-news-categories",
+        "description": "Return a list of the available categories for news and social items."
+      }
     }
   },
   "components": {
