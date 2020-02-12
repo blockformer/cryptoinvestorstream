@@ -37,8 +37,45 @@
       "get": {
         "summary": "Your GET endpoint",
         "tags": [],
-        "responses": {},
-        "operationId": "get-news"
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/newsItem"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-news",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "region",
+            "description": "region or commaseperated list of regions to limit the results to"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "ids",
+            "description": "list of currencies to limit results for"
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "limit",
+            "description": "number of news items to return"
+          }
+        ]
       }
     },
     "/currencies": {
@@ -136,7 +173,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": ""
+                  "$ref": "#/components/schemas/currency-metadata"
                 }
               }
             }
@@ -152,53 +189,21 @@
           }
         },
         "operationId": "get-currencies-id-metadata",
-        "description": "Retrun the metadata for selected currency"
+        "description": "Retrun the metadata for selected currency",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "id",
+            "description": "currency id to show the metadata for",
+            "required": true
+          }
+        ]
       }
     },
     "/currencies/{id}/sparkline": {
-      "parameters": [
-        {
-          "schema": {
-            "type": "string"
-          },
-          "name": "id",
-          "in": "path",
-          "required": true
-        }
-      ],
-      "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
-        "responses": {},
-        "operationId": "get-currencies-id-sparkline"
-      }
-    },
-    "/currencies/ticker": {
-      "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
-        "responses": {},
-        "operationId": "get-currencies-ticker"
-      }
-    },
-    "/market": {
-      "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
-        "responses": {},
-        "operationId": "get-market-fcas"
-      },
-      "parameters": []
-    },
-    "/exchanges": {
-      "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
-        "responses": {},
-        "operationId": "get-exchanges"
-      }
-    },
-    "/exchanges/{id}/metadata": {
       "parameters": [
         {
           "schema": {
@@ -218,22 +223,104 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/currency-metadata"
+                  "$ref": "#/components/schemas/priceSparkline"
                 }
               }
             }
           }
         },
-        "operationId": "get-exchanges-id-metadata",
+        "operationId": "get-currencies-id-sparkline",
+        "description": "Get a price log of a currency for the specified timeframe and currency",
+        "requestBody": {},
         "parameters": [
           {
             "schema": {
-              "type": "integer"
+              "type": "string",
+              "enum": [
+                "1m",
+                "5m",
+                "15m",
+                "30m",
+                "1h",
+                "4h",
+                "1d",
+                "7d",
+                "1m"
+              ]
             },
             "in": "query",
-            "name": "id"
+            "name": "timeframe"
           }
         ]
+      }
+    },
+    "/currencies/ticker": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "": {
+                      "$ref": "#/components/schemas/price"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-currencies-ticker",
+        "description": "Price and volume information for one or more currencies",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "ids",
+            "required": true,
+            "description": "Comma separated list of currencies IDs to filter result"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "convert",
+            "description": "Currency to quote ticker price, market cap, and volume values. May be a Fiat Currency or Cryptocurrency. Default is USD"
+          }
+        ]
+      }
+    },
+    "/exchanges": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "": {
+                      "$ref": "#/components/schemas/exchange"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-exchanges",
+        "description": "Get a list of supported exchnages"
       }
     },
     "/social/twitter": {
@@ -243,6 +330,27 @@
         "responses": {},
         "operationId": "get-social-twitter"
       }
+    },
+    "/market": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/market-metrics"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-market-fcas",
+        "description": "Returns the latest global cryptocurrency market metrics. Use the \"convert\" option to return market values in multiple fiat and cryptocurrency conversions in the same call."
+      },
+      "parameters": []
     }
   },
   "components": {
@@ -473,6 +581,7 @@
       },
       "price": {
         "type": "object",
+        "description": "",
         "properties": {
           "project_id": {
             "type": "integer"
@@ -480,43 +589,43 @@
           "symbol": {
             "type": "string"
           },
-          "price_change_1m": {
+          "price_change_pct_1m": {
             "type": "number"
           },
-          "price_change_2m": {
+          "price_change_pct_2m": {
             "type": "number"
           },
-          "price_change_3m": {
+          "price_change_pct_3m": {
             "type": "number"
           },
-          "price_change_4m": {
+          "price_change_pct_4m": {
             "type": "number"
           },
-          "price_change_5m": {
+          "price_change_pct_5m": {
             "type": "number"
           },
-          "price_change_10m": {
+          "price_change_pct_10m": {
             "type": "number"
           },
-          "price_change_15m": {
+          "price_change_pct_15m": {
             "type": "number"
           },
-          "price_change_30m": {
+          "price_change_pct_30m": {
             "type": "number"
           },
-          "price_change_1h": {
+          "price_change_pct_1h": {
             "type": "number"
           },
-          "price_change_4h": {
+          "price_change_pct_4h": {
             "type": "number"
           },
-          "price_change_1d": {
+          "price_change_pct_1d": {
             "type": "number"
           },
-          "price_change_7d": {
+          "price_change_pct_7d": {
             "type": "number"
           },
-          "price_change_30d": {
+          "price_change_pct_30d": {
             "type": "number"
           },
           "open_day": {
@@ -552,17 +661,13 @@
           "volume_24h": {
             "type": "number"
           },
-          "circulating_supply": {
-            "type": "number"
-          },
-          "market_cap": {
-            "type": "number"
-          },
           "last_update": {
             "type": "string"
+          },
+          "price": {
+            "type": "string"
           }
-        },
-        "description": ""
+        }
       },
       "fearAndGreed": {
         "type": "object",
@@ -586,8 +691,12 @@
         "title": "priceSparkline",
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string"
+          "itimestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "price_usd": {
+            "type": "number"
           }
         }
       },
@@ -603,13 +712,7 @@
             "type": "string"
           },
           "region": {
-            "type": [
-              "string",
-              "array"
-            ],
-            "items": {
-              "type": "string"
-            }
+            "type": "string"
           },
           "country": {
             "type": "string"
@@ -632,8 +735,31 @@
           "volume_30d_change_percent": {
             "type": "number"
           },
+          "website": {
+            "type": "string",
+            "format": "uri"
+          },
+          "fees": {
+            "type": "string",
+            "format": "uri"
+          },
+          "telegram": {
+            "type": "string",
+            "format": "uri"
+          },
+          "twitter": {
+            "type": "string",
+            "format": "uri"
+          },
+          "blog": {
+            "type": "string",
+            "format": "uri"
+          },
           "active": {
-            "type": "boolean"
+            "type": [
+              "string",
+              "boolean"
+            ]
           },
           "last_update": {
             "type": "string",
@@ -691,35 +817,6 @@
           }
         }
       },
-      "market-metrics": {
-        "title": "market-metrics",
-        "type": "object",
-        "description": "Global market metrics",
-        "properties": {
-          "id": {},
-          "fead-and-greed": {
-            "$ref": "#/components/schemas/fearAndGreed"
-          },
-          "bitcoin_dominance": {
-            "type": "string"
-          },
-          "total_cryptocurrencries": {
-            "type": "string"
-          },
-          "btc_dominance": {
-            "type": "string"
-          },
-          "eth_dominance": {
-            "type": "string"
-          },
-          "active_cryptocurrencies": {
-            "type": "string"
-          },
-          "total_exchanges": {
-            "type": "string"
-          }
-        }
-      },
       "market-volume": {
         "title": "volume",
         "type": "object",
@@ -742,6 +839,62 @@
         },
         "description": "Market volume metrics represented in USD",
         "x-examples": {}
+      },
+      "communities": {
+        "title": "communities",
+        "type": "object",
+        "properties": {
+          "currency_id": {
+            "type": "integer"
+          },
+          "link-type": {
+            "type": "string",
+            "enum": [
+              "discord",
+              "telegram",
+              "facebook",
+              "forum",
+              "medium",
+              "slack",
+              "twitter",
+              "reddit",
+              "bitcoin-talk",
+              "instagram"
+            ]
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "description": "Return the communities related to the currency"
+      },
+      "links": {
+        "title": "links",
+        "type": "object",
+        "properties": {
+          "currency_id": {
+            "type": "string"
+          },
+          "link_type": {
+            "type": "string",
+            "enum": [
+              "website",
+              "email",
+              "explorer",
+              "whitepaper",
+              "wallet",
+              "github",
+              "announcement",
+              "bounty-program"
+            ]
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "description": "Returns links related to the currency"
       },
       "currency-metadata": {
         "title": "currency-metadata",
@@ -778,61 +931,48 @@
         },
         "description": "Returns the metadata for a list of specific currency"
       },
-      "links": {
-        "title": "links",
+      "market-metrics": {
+        "title": "market-metrics",
         "type": "object",
         "properties": {
-          "currency_id": {
+          "fear-and-greed": {
             "type": "string"
           },
-          "link_type": {
-            "type": "string",
-            "enum": [
-              "website",
-              "email",
-              "explorer",
-              "whitepaper",
-              "wallet",
-              "github",
-              "announcement",
-              "bounty-program"
-            ]
+          "btc-dominance": {
+            "type": "string"
           },
-          "url": {
-            "type": "string",
-            "format": "uri"
+          "eth-dominance": {
+            "type": "string"
+          },
+          "quote": {
+            "type": "object",
+            "description": "",
+            "properties": {
+              "quote_currency": {
+                "type": "object",
+                "properties": {
+                  "total_marketcap": {
+                    "type": "number"
+                  },
+                  "total_volume_24h": {
+                    "type": "number"
+                  },
+                  "altcoin_volume_24h": {
+                    "type": "number"
+                  },
+                  "altcoin_marketcap": {
+                    "type": "number"
+                  },
+                  "last_update": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              }
+            }
           }
         },
-        "description": "Returns links related to the currency"
-      },
-      "communities": {
-        "title": "communities",
-        "type": "object",
-        "properties": {
-          "currency_id": {
-            "type": "integer"
-          },
-          "link-type": {
-            "type": "string",
-            "enum": [
-              "discord",
-              "telegram",
-              "facebook",
-              "forum",
-              "medium",
-              "slack",
-              "twitter",
-              "reddit",
-              "bitcoin-talk",
-              "instagram"
-            ]
-          },
-          "url": {
-            "type": "string",
-            "format": "uri"
-          }
-        },
-        "description": "Return the communities related to the currency"
+        "description": ""
       }
     },
     "securitySchemes": {
