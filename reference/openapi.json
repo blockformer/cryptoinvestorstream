@@ -94,6 +94,9 @@
                 }
               }
             }
+          },
+          "": {
+            "description": ""
           }
         },
         "operationId": "get-news",
@@ -378,7 +381,7 @@
                         }
                       }
                     },
-                    "": {
+                    "Almost done": {
                       "type": "object",
                       "properties": {
                         "pirces": {
@@ -644,8 +647,101 @@
       "get": {
         "summary": "Your GET endpoint",
         "tags": [],
-        "responses": {},
-        "operationId": "get-social-twitter"
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/tweets"
+                },
+                "examples": {
+                  "example": {
+                    "value": {
+                      "id": "",
+                      "source": {
+                        "id": "",
+                        "name": ""
+                      },
+                      "projects": [
+                        {
+                          "id": "2",
+                          "symbol": "ETH",
+                          "name": "Ethereum"
+                        },
+                        {
+                          "id": "1",
+                          "symbol": "BTC",
+                          "name": "Bitcoin"
+                        }
+                      ],
+                      "categories": [
+                        {
+                          "id": "1",
+                          "name": "Project news"
+                        },
+                        {
+                          "id": "2",
+                          "name": "Regulation"
+                        }
+                      ],
+                      "exchanges": [
+                        {
+                          "id": "1",
+                          "name": "Binance"
+                        }
+                      ],
+                      "tags": [
+                        {
+                          "id": "1",
+                          "name": "stablecoins"
+                        }
+                      ],
+                      "message": "At #Crypto Center we are looking for franchisees with an entrepreneurial &amp; managerial spirit, a strong sense of interpersonal skills. #Franchisees who know how to train &amp; motivate their employees, driven by passion.In-depth :play_button: https://t.co/4H6I2jh1tx#Peculium #invest #success https://t.co/4ykvMnydEj",
+                      "message_id": "12123123344555",
+                      "publish_date": "2018-07-05T15:00:00Z",
+                      "sentiment": "POSITIVE",
+                      "retweet_count": "121",
+                      "favorite_count": "2323",
+                      "expert_level": "PRO",
+                      "link": "https://www.newsbtc.com/2020/02/13/okex-btcusd-options-registers-trading-volume-of-usd175-6m-volume-in-its-very-first-month/",
+                      "title": "OKEx BTCUSD Options Registers Trading Volume of USD175.6M Volume in its Very First Month",
+                      "excerpt": "The leading cryptocurrency and digital asset trading platform OKEx is having a great run as it continues to provide world-class trading products for the global crypto community. The recently launched BTCUSD options trading feature on the platform is reported to have garnered volumes of around $176 million within a span of one month. The figures..."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-social-twitter",
+        "description": "Return a list of twitter messsages",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "region",
+            "description": "region for which to return twitter messages from"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "ids",
+            "description": "Currency ids to limit the results to"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "limit",
+            "description": "Number of twitter message to return"
+          }
+        ]
       }
     },
     "/news/categories": {
@@ -659,13 +755,102 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/categories"
+                },
+                "examples": {
+                  "example": {
+                    "value": [
+                      {
+                        "id": "1",
+                        "name": "adoptation"
+                      },
+                      {
+                        "id": "2",
+                        "name": "analysis"
+                      },
+                      {
+                        "id": "3",
+                        "name": "exchange listing"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "": {
+                      "$ref": "#/components/schemas/categories"
+                    }
+                  }
+                },
+                "examples": {
+                  "example": {
+                    "value": [
+                      {
+                        "id": "1",
+                        "name": "adoptation"
+                      },
+                      {
+                        "id": "2",
+                        "name": "analysis"
+                      },
+                      {
+                        "id": "3",
+                        "name": "exchange listing"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "operationId": "get-news-categories",
+        "description": "Return a list of the available categories for news and social items."
+      }
+    },
+    "/news/tags": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/tags"
+                },
+                "examples": {
+                  "example": {
+                    "value": [
+                      {
+                        "id": "1",
+                        "name": "stablecoins"
+                      },
+                      {
+                        "id": "2",
+                        "name": "security"
+                      },
+                      {
+                        "id": "3",
+                        "name": "malware"
+                      }
+                    ]
+                  }
                 }
               }
             }
           }
         },
-        "operationId": "get-news-categories",
-        "description": "Return a list of the available categories for news and social items."
+        "operationId": "get-news-tags",
+        "description": "Return a list of tags which can be used. "
       }
     }
   },
@@ -782,6 +967,59 @@
             "type": "string",
             "format": "byte"
           }
+        },
+        "x-examples": {
+          "example": {
+            "id": "",
+            "source": {
+              "id": "",
+              "name": ""
+            },
+            "projects": [
+              {
+                "id": "2",
+                "symbol": "ETH",
+                "name": "Ethereum"
+              },
+              {
+                "id": "1",
+                "symbol": "BTC",
+                "name": "Bitcoin"
+              }
+            ],
+            "categories": [
+              {
+                "id": "1",
+                "name": "Project news"
+              },
+              {
+                "id": "2",
+                "name": "Regulation"
+              }
+            ],
+            "exchanges": [
+              {
+                "id": "1",
+                "name": "Binance"
+              }
+            ],
+            "tags": [
+              {
+                "id": "1",
+                "name": "stablecoins"
+              }
+            ],
+            "message": "At #Crypto Center we are looking for franchisees with an entrepreneurial &amp; managerial spirit, a strong sense of interpersonal skills. #Franchisees who know how to train &amp; motivate their employees, driven by passion.In-depth :play_button: https://t.co/4H6I2jh1tx#Peculium #invest #success https://t.co/4ykvMnydEj",
+            "message_id": "12123123344555",
+            "publish_date": "2018-07-05T15:00:00Z",
+            "sentiment": "POSITIVE",
+            "retweet_count": "121",
+            "favorite_count": "2323",
+            "expert_level": "PRO",
+            "link": "https://www.newsbtc.com/2020/02/13/okex-btcusd-options-registers-trading-volume-of-usd175-6m-volume-in-its-very-first-month/",
+            "title": "OKEx BTCUSD Options Registers Trading Volume of USD175.6M Volume in its Very First Month",
+            "excerpt": "The leading cryptocurrency and digital asset trading platform OKEx is having a great run as it continues to provide world-class trading products for the global crypto community. The recently launched BTCUSD options trading feature on the platform is reported to have garnered volumes of around $176 million within a span of one month. The figures..."
+          }
         }
       },
       "twitterSource": {
@@ -823,6 +1061,22 @@
             "type": "string",
             "format": "byte"
           }
+        },
+        "x-examples": {
+          "example": [
+            {
+              "id": "1",
+              "name": "stablecoins"
+            },
+            {
+              "id": "2",
+              "name": "security"
+            },
+            {
+              "id": "3",
+              "name": "malware"
+            }
+          ]
         }
       },
       "categories": {
@@ -837,6 +1091,22 @@
             "type": "string",
             "format": "byte"
           }
+        },
+        "x-examples": {
+          "example": [
+            {
+              "id": "1",
+              "name": "adoptation"
+            },
+            {
+              "id": "2",
+              "name": "analysis"
+            },
+            {
+              "id": "3",
+              "name": "exchange listing"
+            }
+          ]
         }
       },
       "newsSource": {
