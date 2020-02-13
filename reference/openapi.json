@@ -46,7 +46,51 @@
                   "$ref": "#/components/schemas/newsItem"
                 },
                 "examples": {
-                  "example-1": {}
+                  "example": {
+                    "value": {
+                      "id": "2332",
+                      "source": {
+                        "id": "",
+                        "name": "",
+                        "url": ""
+                      },
+                      "projects": [
+                        {
+                          "id": "2",
+                          "symbol": "ETH",
+                          "name": "Ethereum"
+                        },
+                        {
+                          "id": "1",
+                          "symbol": "BTC",
+                          "name": "Bitcoin"
+                        }
+                      ],
+                      "categories": [
+                        {
+                          "id": "1",
+                          "name": "Project news"
+                        },
+                        {
+                          "id": "2",
+                          "name": "Regulation"
+                        }
+                      ],
+                      "tags": [
+                        {
+                          "id": "1",
+                          "name": "stablecoins"
+                        }
+                      ],
+                      "link": "https://www.newsbtc.com/2020/02/13/okex-btcusd-options-registers-trading-volume-of-usd175-6m-volume-in-its-very-first-month/",
+                      "title": "OKEx BTCUSD Options Registers Trading Volume of USD175.6M Volume in its Very First Month",
+                      "excerpt": "The leading cryptocurrency and digital asset trading platform OKEx is having a great run as it continues to provide world-class trading products for the global crypto community. The recently launched BTCUSD options trading feature on the platform is reported to have garnered volumes of around $176 million within a span of one month. The figures...",
+                      "publish_date": "2018-07-05T15:00:00Z",
+                      "sentiment": "POSITIVE",
+                      "expert_level": "PRO",
+                      "region": "en"
+                    }
+                  }
                 }
               }
             }
@@ -134,8 +178,41 @@
       "get": {
         "summary": "Your GET endpoint",
         "tags": [],
-        "responses": {},
-        "operationId": "get-news-sources"
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "": {
+                      "$ref": "#/components/schemas/newsSource"
+                    }
+                  }
+                },
+                "examples": {
+                  "example": {
+                    "value": [
+                      {
+                        "id": "2",
+                        "name": "NewsBTC",
+                        "url": "https://www.newsbtc.com/"
+                      },
+                      {
+                        "id": "4",
+                        "name": "Trustnodes",
+                        "url": "https://www.trustnodes.com/"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-news-sources",
+        "description": "Return a list of news sources. "
       }
     },
     "/currencies/metadata": {
@@ -596,6 +673,11 @@
     "schemas": {
       "newsItem": {
         "type": "object",
+        "title": "",
+        "x-examples": {
+          "example-1": {}
+        },
+        "description": "",
         "properties": {
           "id": {
             "type": "integer",
@@ -603,12 +685,11 @@
             "example": 23
           },
           "source": {
-            "type": "integer",
-            "format": "int32",
-            "example": 2
+            "$ref": "#/components/schemas/newsSource"
           },
           "projects": {
-            "$ref": "#/components/schemas/project"
+            "type": "array",
+            "items": {}
           },
           "categories": {
             "$ref": "#/components/schemas/categories"
@@ -644,11 +725,10 @@
           "expert_level": {
             "type": "string",
             "format": "byte"
+          },
+          "region": {
+            "type": "string"
           }
-        },
-        "title": "",
-        "x-examples": {
-          "example-1": {}
         }
       },
       "tweets": {
@@ -776,6 +856,20 @@
             "format": "uri",
             "example": "www.newsbtc.com"
           }
+        },
+        "x-examples": {
+          "example": [
+            {
+              "id": "2",
+              "name": "NewsBTC",
+              "url": "https://www.newsbtc.com/"
+            },
+            {
+              "id": "4",
+              "name": "Trustnodes",
+              "url": "https://www.trustnodes.com/"
+            }
+          ]
         }
       },
       "project": {
