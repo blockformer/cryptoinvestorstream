@@ -78,7 +78,7 @@
                           "name": "Regulation"
                         }
                       ],
-                      "tags": [
+                      "news-tags": [
                         {
                           "id": "1",
                           "name": "stablecoins"
@@ -130,7 +130,7 @@
         ],
         "description": "Return a list of the latest news items, limit to currencties, region or amount of news items. "
       }
-    },
+    },    
     "/currencies": {
       "get": {
         "summary": "Your GET endpoint",
@@ -233,9 +233,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/currency-metadata"
-                },
-                "examples": {
-                  "example": {}
                 }
               }
             }
@@ -713,6 +710,12 @@
                     }
                   }
                 }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
               }
             }
           }
@@ -828,7 +831,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/tags"
+                  "$ref": "#/components/schemas/news-tags"
                 },
                 "examples": {
                   "example": {
@@ -862,9 +865,6 @@
       "newsItem": {
         "type": "object",
         "title": "",
-        "x-examples": {
-          "example": {}
-        },
         "description": "",
         "properties": {
           "id": {
@@ -882,8 +882,8 @@
           "categories": {
             "$ref": "#/components/schemas/categories"
           },
-          "tags": {
-            "$ref": "#/components/schemas/tags"
+          "news-tags": {
+            "$ref": "#/components/schemas/news-tags"
           },
           "link": {
             "type": "string",
@@ -921,56 +921,6 @@
       },
       "tweets": {
         "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "example": 2
-          },
-          "source": {
-            "$ref": "#/components/schemas/twitterSource"
-          },
-          "categories": {
-            "$ref": "#/components/schemas/categories"
-          },
-          "projects": {
-            "$ref": "#/components/schemas/project"
-          },
-          "tags": {
-            "$ref": "#/components/schemas/tags"
-          },
-          "message": {
-            "type": "string",
-            "format": "byte"
-          },
-          "message_id": {
-            "type": "integer",
-            "format": "int64",
-            "example": 1197150607519305700
-          },
-          "publish_date": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "sentiment": {
-            "type": "string",
-            "format": "byte"
-          },
-          "retweet_count": {
-            "type": "integer",
-            "format": "int32",
-            "example": 323
-          },
-          "favorite_count": {
-            "type": "integer",
-            "format": "int32",
-            "example": 2332
-          },
-          "expert_level": {
-            "type": "string",
-            "format": "byte"
-          }
-        },
         "x-examples": {
           "example": {
             "id": "",
@@ -1023,6 +973,56 @@
             "title": "OKEx BTCUSD Options Registers Trading Volume of USD175.6M Volume in its Very First Month",
             "excerpt": "The leading cryptocurrency and digital asset trading platform OKEx is having a great run as it continues to provide world-class trading products for the global crypto community. The recently launched BTCUSD options trading feature on the platform is reported to have garnered volumes of around $176 million within a span of one month. The figures..."
           }
+        },
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 2
+          },
+          "source": {
+            "$ref": "#/components/schemas/twitterSource"
+          },
+          "categories": {
+            "$ref": "#/components/schemas/categories"
+          },
+          "projects": {
+            "$ref": "#/components/schemas/project"
+          },
+          "news-tags": {
+            "$ref": "#/components/schemas/news-tags"
+          },
+          "message": {
+            "type": "string",
+            "format": "byte"
+          },
+          "message_id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1197150607519305700
+          },
+          "publish_date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sentiment": {
+            "type": "string",
+            "format": "byte"
+          },
+          "retweet_count": {
+            "type": "integer",
+            "format": "int32",
+            "example": 323
+          },
+          "favorite_count": {
+            "type": "integer",
+            "format": "int32",
+            "example": 2332
+          },
+          "expert_level": {
+            "type": "string",
+            "format": "byte"
+          }
         }
       },
       "twitterSource": {
@@ -1052,7 +1052,7 @@
         },
         "description": "Returns all twitter sources crypto investor stream uses"
       },
-      "tags": {
+      "news-tags": {
         "type": "object",
         "properties": {
           "id": {
