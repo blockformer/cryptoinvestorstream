@@ -35,102 +35,6 @@
     }
   ],
   "paths": {
-    "/news": {
-      "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/newsItem"
-                },
-                "examples": {
-                  "example": {
-                    "value": {
-                      "id": "2332",
-                      "source": {
-                        "id": "",
-                        "name": "",
-                        "url": ""
-                      },
-                      "projects": [
-                        {
-                          "id": "2",
-                          "symbol": "ETH",
-                          "name": "Ethereum"
-                        },
-                        {
-                          "id": "1",
-                          "symbol": "BTC",
-                          "name": "Bitcoin"
-                        }
-                      ],
-                      "categories": [
-                        {
-                          "id": "1",
-                          "name": "Project news"
-                        },
-                        {
-                          "id": "2",
-                          "name": "Regulation"
-                        }
-                      ],
-                      "news-tags": [
-                        {
-                          "id": "1",
-                          "name": "stablecoins"
-                        }
-                      ],
-                      "link": "https://www.newsbtc.com/2020/02/13/okex-btcusd-options-registers-trading-volume-of-usd175-6m-volume-in-its-very-first-month/",
-                      "title": "OKEx BTCUSD Options Registers Trading Volume of USD175.6M Volume in its Very First Month",
-                      "excerpt": "The leading cryptocurrency and digital asset trading platform OKEx is having a great run as it continues to provide world-class trading products for the global crypto community. The recently launched BTCUSD options trading feature on the platform is reported to have garnered volumes of around $176 million within a span of one month. The figures...",
-                      "publish_date": "2018-07-05T15:00:00Z",
-                      "sentiment": "POSITIVE",
-                      "expert_level": "PRO",
-                      "region": "en"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "": {
-            "description": ""
-          }
-        },
-        "operationId": "get-news",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "region",
-            "description": "region or commaseperated list of regions to limit the results to"
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "ids",
-            "description": "list of currencies to limit results for"
-          },
-          {
-            "schema": {
-              "type": "integer"
-            },
-            "in": "query",
-            "name": "limit",
-            "description": "number of news items to return"
-          }
-        ],
-        "description": "Return a list of the latest news items, limit to currencties, region or amount of news items. "
-      }
-    },    
     "/currencies": {
       "get": {
         "summary": "Your GET endpoint",
@@ -858,6 +762,102 @@
         "operationId": "get-news-tags",
         "description": "Return a list of tags which can be used. "
       }
+    },
+    "/news": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/newsItem"
+                },
+                "examples": {
+                  "example": {
+                    "value": {
+                      "id": "2332",
+                      "source": {
+                        "id": "",
+                        "name": "",
+                        "url": ""
+                      },
+                      "projects": [
+                        {
+                          "id": "2",
+                          "symbol": "ETH",
+                          "name": "Ethereum"
+                        },
+                        {
+                          "id": "1",
+                          "symbol": "BTC",
+                          "name": "Bitcoin"
+                        }
+                      ],
+                      "categories": [
+                        {
+                          "id": "1",
+                          "name": "Project news"
+                        },
+                        {
+                          "id": "2",
+                          "name": "Regulation"
+                        }
+                      ],
+                      "news-tags": [
+                        {
+                          "id": "1",
+                          "name": "stablecoins"
+                        }
+                      ],
+                      "link": "https://www.newsbtc.com/2020/02/13/okex-btcusd-options-registers-trading-volume-of-usd175-6m-volume-in-its-very-first-month/",
+                      "title": "OKEx BTCUSD Options Registers Trading Volume of USD175.6M Volume in its Very First Month",
+                      "excerpt": "The leading cryptocurrency and digital asset trading platform OKEx is having a great run as it continues to provide world-class trading products for the global crypto community. The recently launched BTCUSD options trading feature on the platform is reported to have garnered volumes of around $176 million within a span of one month. The figures...",
+                      "publish_date": "2018-07-05T15:00:00Z",
+                      "sentiment": "POSITIVE",
+                      "expert_level": "PRO",
+                      "region": "en"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "operationId": "get-news",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "region",
+            "description": "region or commaseperated list of regions to limit the results to"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "ids",
+            "description": "list of currencies to limit results for"
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "limit",
+            "description": "number of news items to return"
+          }
+        ],
+        "description": "Return a list of the latest news items, limit to currencties, region or amount of news items. "
+      }
     }
   },
   "components": {
@@ -1534,35 +1534,6 @@
         "title": "currency-metadata",
         "type": "object",
         "description": "Returns the metadata for a list of specific currency",
-        "properties": {
-          "currency_id": {
-            "type": "string"
-          },
-          "logo_url": {
-            "type": "string"
-          },
-          "bio_short": {
-            "type": "string"
-          },
-          "bio_long": {
-            "type": "string"
-          },
-          "bio_keywords": {
-            "type": "string"
-          },
-          "hq_location": {
-            "type": "string"
-          },
-          "vertical_types": {
-            "$ref": "#/components/schemas/vertical-types"
-          },
-          "links": {
-            "$ref": "#/components/schemas/links"
-          },
-          "communities": {
-            "$ref": "#/components/schemas/communities"
-          }
-        },
         "x-examples": {
           "example": {
             "id": "1",
@@ -1597,6 +1568,59 @@
                 "url": "http://www.bitcoin.com"
               }
             ]
+          }
+        },
+        "properties": {
+          "currency_id": {
+            "type": "string"
+          },
+          "logo_url": {
+            "type": "string"
+          },
+          "bio_short": {
+            "type": "string"
+          },
+          "bio_long": {
+            "type": "string"
+          },
+          "bio_keywords": {
+            "type": "string"
+          },
+          "hq_location": {
+            "type": "string"
+          },
+          "vertical_types": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "$ref": "#/components/schemas/vertical-types"
+                }
+              }
+            }
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "": {
+                  "$ref": "#/components/schemas/links"
+                }
+              }
+            }
+          },
+          "communities": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "": {
+                  "$ref": "#/components/schemas/communities"
+                }
+              }
+            }
           }
         }
       },
@@ -1654,14 +1678,8 @@
         "title": "vertical-types",
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
+          "vertical-types": {
+            "type": "object"
           }
         }
       }
