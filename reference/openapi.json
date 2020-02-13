@@ -44,6 +44,9 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/newsItem"
+                },
+                "examples": {
+                  "example-1": {}
                 }
               }
             }
@@ -133,24 +136,6 @@
         "tags": [],
         "responses": {},
         "operationId": "get-news-sources"
-      }
-    },
-    "/price/{symbol}/sparkline": {
-      "parameters": [
-        {
-          "schema": {
-            "type": "string"
-          },
-          "name": "symbol",
-          "in": "path",
-          "required": true
-        }
-      ],
-      "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
-        "responses": {},
-        "operationId": "get-price-symbol-sparkline"
       }
     },
     "/currencies/metadata": {
@@ -249,18 +234,6 @@
       "get": {
         "summary": "Your GET endpoint",
         "tags": [],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/priceSparkline"
-                }
-              }
-            }
-          }
-        },
         "operationId": "get-currencies-id-sparkline",
         "parameters": [
           {
@@ -280,7 +253,8 @@
             },
             "in": "query",
             "name": "timeframe",
-            "description": "timeframe to return the sparkline data for"
+            "description": "timeframe to return the sparkline data for",
+            "required": true
           },
           {
             "schema": {
@@ -288,25 +262,82 @@
             },
             "in": "query",
             "name": "id",
-            "description": "currency id to return sparkline data for"
+            "description": "currency id to return sparkline data for",
+            "required": true
           },
           {
             "schema": {
               "type": "string"
             },
             "in": "query",
-            "name": "start-time"
+            "name": "start-time",
+            "description": "Start time of the interval in RFC3339 (URI escaped)"
           },
           {
             "schema": {
               "type": "string"
             },
             "in": "query",
-            "name": "end-time"
+            "name": "end-time",
+            "description": "End time of the interval in RFC3339 (URI escaped). If not provided, the current time is used.\n\n"
           }
         ],
         "requestBody": {},
-        "description": "Get historic price of a currency for the specified timeframe and currency"
+        "description": "Get historic price of a currency for the specified timeframe and currency",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object": {
+                      "type": "object",
+                      "properties": {
+                        "timestamps": {
+                          "type": "array",
+                          "items": {}
+                        }
+                      }
+                    },
+                    "": {
+                      "type": "object",
+                      "properties": {
+                        "pirces": {
+                          "type": "array",
+                          "items": {}
+                        }
+                      }
+                    },
+                    "currency": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "examples": {
+                  "example": {
+                    "value": [
+                      {
+                        "currency": "BTC",
+                        "id": "1",
+                        "timestamps": [
+                          "2018-04-03T16:00:00Z"
+                        ],
+                        "prices": [
+                          "7436.82313"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/currencies/ticker": {
@@ -448,6 +479,31 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/market-metrics"
+                },
+                "examples": {
+                  "example": {
+                    "value": {
+                      "btc_dominace": "",
+                      "eth_dominance": "",
+                      "fear-and-greed-index": {
+                        "value": "987",
+                        "value_classification": "A",
+                        "timestamp": "2019-12-16T18:47:00.000Z"
+                      },
+                      "last_update": "2019-05-16T18:47:00.000Z",
+                      "quote": {
+                        "USD": {
+                          "total_market_cap": 250385096532.124,
+                          "total_volume_24h": 119270642406.968,
+                          "total_volume_24h_reported": 1514905418.39087,
+                          "altcoin_volume_24h": 119270642406.968,
+                          "altcoin_volume_24h_reported": 1514905418.39087,
+                          "altcoin_market_cap": 250385096532.124,
+                          "last_updated": "2019-05-16T18:47:00.000Z"
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -473,6 +529,30 @@
                     "": {
                       "$ref": "#/components/schemas/exchange"
                     }
+                  }
+                },
+                "examples": {
+                  "example": {
+                    "value": [
+                      {
+                        "id": "2",
+                        "name": "Binance",
+                        "description": "Binance is a global cryptocurrency exchange that provides a platform for trading more than 100 cryptocurrencies. Since early 2018, Binance is considered as the biggest cryptocurrency exchange in the world in terms of trading volume",
+                        "region": "eu",
+                        "country": "Malta",
+                        "volume_24h": "236797947.38",
+                        "volume_7d": "4334436797947.38",
+                        "volume_30d": "34343433797947.38",
+                        "volume_24h_change_pct": "1.5563",
+                        "volume_7d_change_pct": "2.3343",
+                        "volume_30d_change_pct": "3.2333",
+                        "blog": "http://binance.com/blog",
+                        "twitter": "http://twitter.com/binance",
+                        "telegram": "https://t.me/binanceexchange",
+                        "fees": "https://www.binance.com/en/fee/schedule",
+                        "website": "https://www.binance.com"
+                      }
+                    ]
                   }
                 }
               }
@@ -566,7 +646,10 @@
             "format": "byte"
           }
         },
-        "title": ""
+        "title": "",
+        "x-examples": {
+          "example-1": {}
+        }
       },
       "tweets": {
         "type": "object",
@@ -836,6 +919,13 @@
             "type": "string",
             "format": "date-time"
           }
+        },
+        "x-examples": {
+          "example-1": {
+            "value": "987",
+            "value_classification": "A",
+            "timestamp": "2019-12-16T18:47:00.000Z"
+          }
         }
       },
       "priceSparkline": {
@@ -887,10 +977,7 @@
             "type": "number"
           },
           "active": {
-            "type": [
-              "string",
-              "boolean"
-            ]
+            "type": "boolean"
           },
           "last_update": {
             "type": "string",
@@ -916,6 +1003,28 @@
             "type": "string",
             "format": "uri"
           }
+        },
+        "x-examples": {
+          "example": [
+            {
+              "id": "2",
+              "name": "Binance",
+              "description": "Binance is a global cryptocurrency exchange that provides a platform for trading more than 100 cryptocurrencies. Since early 2018, Binance is considered as the biggest cryptocurrency exchange in the world in terms of trading volume",
+              "region": "eu",
+              "country": "Malta",
+              "volume_24h": "236797947.38",
+              "volume_7d": "4334436797947.38",
+              "volume_30d": "34343433797947.38",
+              "volume_24h_change_pct": "1.5563",
+              "volume_7d_change_pct": "2.3343",
+              "volume_30d_change_pct": "3.2333",
+              "blog": "http://binance.com/blog",
+              "twitter": "http://twitter.com/binance",
+              "telegram": "https://t.me/binanceexchange",
+              "fees": "https://www.binance.com/en/fee/schedule",
+              "website": "https://www.binance.com"
+            }
+          ]
         }
       },
       "fcas": {
@@ -972,6 +1081,29 @@
         "title": "market-metrics",
         "type": "object",
         "description": "",
+        "x-examples": {
+          "example": {
+            "btc_dominace": "",
+            "eth_dominance": "",
+            "fear-and-greed-index": {
+              "value": "987",
+              "value_classification": "A",
+              "timestamp": "2019-12-16T18:47:00.000Z"
+            },
+            "last_update": "2019-05-16T18:47:00.000Z",
+            "quote": {
+              "USD": {
+                "total_market_cap": 250385096532.124,
+                "total_volume_24h": 119270642406.968,
+                "total_volume_24h_reported": 1514905418.39087,
+                "altcoin_volume_24h": 119270642406.968,
+                "altcoin_volume_24h_reported": 1514905418.39087,
+                "altcoin_market_cap": 250385096532.124,
+                "last_updated": "2019-05-16T18:47:00.000Z"
+              }
+            }
+          }
+        },
         "properties": {
           "quote": {
             "type": "object",
@@ -1007,7 +1139,7 @@
             "type": "string"
           },
           "fear-and-greed": {
-            "type": "string"
+            "$ref": "#/components/schemas/fearAndGreed"
           }
         }
       },
@@ -1068,7 +1200,40 @@
           }
         },
         "x-examples": {
-          "example-1": {}
+          "example": {
+            "id": "1",
+            "symbol": "BTC",
+            "logo_url": "https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/btc.svg",
+            "bio_short": "Bitcoin is a cryptocurrency.",
+            "bio_long": "Bitcoin is a cryptocurrency. It is a decentralized digital currency",
+            "bio_keywords": "BTC,Bitcoin",
+            "hq_location": "Malta",
+            "vertical_types": {
+              "id": "269.75208019",
+              "name": "0.03297053",
+              "description": "1110989572.04"
+            },
+            "communities": [
+              {
+                "type": "twitter",
+                "url": "http://www.twitter.com/bitcoin"
+              },
+              {
+                "type": "discord",
+                "url": "http://www.discord.com/bitcoin"
+              }
+            ],
+            "links": [
+              {
+                "type": "website",
+                "url": "http://www.bitcoin.com"
+              },
+              {
+                "type": "website",
+                "url": "http://www.bitcoin.com"
+              }
+            ]
+          }
         }
       },
       "links": {
