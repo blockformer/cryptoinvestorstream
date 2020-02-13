@@ -1592,34 +1592,19 @@
           "vertical_types": {
             "type": "array",
             "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "$ref": "#/components/schemas/vertical-types"
-                }
-              }
+              "$ref": "#/components/schemas/vertical-types"
             }
           },
           "links": {
             "type": "array",
             "items": {
-              "type": "object",
-              "properties": {
-                "": {
-                  "$ref": "#/components/schemas/links"
-                }
-              }
+              "$ref": "#/components/schemas/links"
             }
           },
           "communities": {
             "type": "array",
             "items": {
-              "type": "object",
-              "properties": {
-                "": {
-                  "$ref": "#/components/schemas/communities"
-                }
-              }
+              "$ref": "#/components/schemas/communities"
             }
           }
         }
