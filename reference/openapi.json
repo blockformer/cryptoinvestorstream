@@ -4,13 +4,15 @@
     "title": "Crypto Investor API",
     "description": "API for fetching cryptocurrency price, market and news information.",
     "contact": {
-      "email": "api@cryptoinvestor.stram"
+      "email": "api@cryptoinvestor.stram",
+      "name": "Crypto Investor Stream API Team"
     },
     "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "termsOfService": "https://cryptoinvestor.stream/terms"
   },
   "servers": [
     {
@@ -125,7 +127,8 @@
             "name": "limit",
             "description": "number of news items to return"
           }
-        ]
+        ],
+        "description": "Return a list of the latest news items, limit to currencties, region or amount of news items. "
       }
     },
     "/currencies": {
@@ -860,7 +863,7 @@
         "type": "object",
         "title": "",
         "x-examples": {
-          "example-1": {}
+          "example": {}
         },
         "description": "",
         "properties": {
@@ -1111,22 +1114,6 @@
       },
       "newsSource": {
         "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "example": 2
-          },
-          "name": {
-            "type": "string",
-            "format": "byte"
-          },
-          "url": {
-            "type": "string",
-            "format": "uri",
-            "example": "www.newsbtc.com"
-          }
-        },
         "x-examples": {
           "example": [
             {
@@ -1140,6 +1127,20 @@
               "url": "https://www.trustnodes.com/"
             }
           ]
+        },
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "format": "byte"
+          },
+          "url": {
+            "type": "string",
+            "example": "www.newsbtc.com"
+          }
         }
       },
       "project": {
@@ -1159,7 +1160,6 @@
           },
           "image-url": {
             "type": "string",
-            "format": "uri",
             "example": "https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/btc.svg"
           },
           "bio_short": {
@@ -1666,6 +1666,17 @@
         }
       }
     },
-    "securitySchemes": {}
+    "securitySchemes": {
+      "API Key Query": {
+        "name": "api_key",
+        "type": "apiKey",
+        "in": "query"
+      },
+      "API Key  Header": {
+        "name": "X-API-KEY",
+        "type": "apiKey",
+        "in": "header"
+      }
+    }
   }
 }
