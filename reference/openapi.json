@@ -1192,12 +1192,12 @@
         "x-examples": {
           "example": [
             {
-              "id": "2",
+              "id": 2,
               "name": "NewsBTC",
               "url": "https://www.newsbtc.com/"
             },
             {
-              "id": "4",
+              "id": 4,
               "name": "Trustnodes",
               "url": "https://www.trustnodes.com/"
             }
@@ -1205,17 +1205,21 @@
         },
         "properties": {
           "name": {
-            "type": "string"
+            "type": "string",
+            "example": "NewsBTC",
+            "description": "name of the news source"
           },
           "url": {
             "type": "string",
             "format": "uri",
-            "example": "http://www.newsbtc.com"
+            "example": "http://www.newsbtc.com",
+            "description": "url of the news source"
           },
           "id": {
             "type": "integer",
             "format": "int32",
-            "example": "34"
+            "example": "34",
+            "description": "id of the news source"
           }
         }
       },
@@ -1262,87 +1266,6 @@
         },
         "title": ""
       },
-      "price": {
-        "type": "object",
-        "description": "",
-        "properties": {
-          "project_id": {
-            "type": "integer"
-          },
-          "symbol": {
-            "type": "string"
-          },
-          "open_day": {
-            "type": "number"
-          },
-          "high_day": {
-            "type": "number"
-          },
-          "low_day": {
-            "type": "number"
-          },
-          "open_24h": {
-            "type": "number"
-          },
-          "high_24": {
-            "type": "number"
-          },
-          "low_24h": {
-            "type": "number"
-          },
-          "open_hour": {
-            "type": "number"
-          },
-          "high_hour": {
-            "type": "number"
-          },
-          "low_hour": {
-            "type": "number"
-          },
-          "price": {
-            "type": "string"
-          },
-          "price_change_pct_30d": {
-            "type": "number"
-          },
-          "price_change_pct_7d": {
-            "type": "number"
-          },
-          "price_change_pct_1d": {
-            "type": "number"
-          },
-          "price_change_pct_4h": {
-            "type": "number"
-          },
-          "price_change_pct_1h": {
-            "type": "number"
-          },
-          "price_change_pct_30m": {
-            "type": "number"
-          },
-          "price_change_pct_15m": {
-            "type": "number"
-          },
-          "price_change_pct_10m": {
-            "type": "number"
-          },
-          "price_change_pct_5m": {
-            "type": "number"
-          },
-          "price_change_pct_4m": {
-            "type": "number"
-          },
-          "price_change_pct_3m": {
-            "type": "number"
-          },
-          "price_change_pct_2m": {
-            "type": "number"
-          },
-          "price_change_pct_1m": {
-            "type": "number"
-          }
-        }
-      },
       "fearAndGreed": {
         "type": "object",
         "x-examples": {
@@ -1377,11 +1300,15 @@
         "type": "object",
         "properties": {
           "price_usd": {
-            "type": "number"
+            "type": "number",
+            "format": "float",
+            "example": "1024.15",
+            "description": "Price in USD"
           },
           "itimestamp": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2019-05-16T18:47:00.000Z"
           }
         }
       },
