@@ -49,13 +49,16 @@
                   "properties": {
                     "id": {
                       "type": "integer",
-                      "format": "int32"
+                      "format": "int32",
+                      "example": 45
                     },
                     "name": {
-                      "type": "string"
+                      "type": "string",
+                      "example": "Bitcoin"
                     },
                     "symbol": {
-                      "type": "string"
+                      "type": "string",
+                      "example": "BTC"
                     }
                   }
                 },
@@ -276,29 +279,33 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "object": {
-                      "type": "object",
-                      "properties": {
-                        "timestamps": {
-                          "type": "array",
-                          "items": {}
-                        }
+                    "timestamps": {
+                      "type": "array",
+                      "description": "List of timestamps",
+                      "example": "['2018-07-05T15:00:00Z','2018-07-05T15:00:00Z']",
+                      "items": {
+                        "type": "string"
                       }
                     },
-                    "Almost done": {
-                      "type": "object",
-                      "properties": {
-                        "pirces": {
-                          "type": "array",
-                          "items": {}
-                        }
+                    "pirces": {
+                      "type": "array",
+                      "description": "array of prices in default: USD",
+                      "example": "[12323.23233,12323.23233]",
+                      "items": {
+                        "type": "number"
                       }
                     },
                     "currency": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "Currency symbol",
+                      "format": "byte",
+                      "example": "BTC"
                     },
                     "id": {
-                      "type": "integer"
+                      "type": "integer",
+                      "description": "Currency id",
+                      "format": "int32",
+                      "example": "1"
                     }
                   }
                 },
@@ -337,62 +344,75 @@
                   "type": "object",
                   "properties": {
                     "id": {
-                      "type": "integer"
+                      "type": "integer",
+                      "format": "int32"
                     },
                     "symbol": {
-                      "type": "string"
+                      "type": "string",
+                      "format": "byte"
                     },
                     "price": {
-                      "type": "number"
+                      "type": "number",
+                      "format": "float"
                     },
                     "price_date": {
-                      "type": "string",
-                      "format": "date-time"
+                      "format": "date-time",
+                      "type": "string"
                     },
                     "circulating_supply": {
-                      "type": "string"
+                      "type": "number",
+                      "format": "float"
                     },
                     "max_supply": {
-                      "type": "string"
-                    },
-                    "name": {
-                      "type": "string"
+                      "type": "number",
+                      "format": "float"
                     },
                     "logo_url": {
-                      "type": "string"
+                      "type": "string",
+                      "format": "uri"
                     },
                     "market_cap": {
-                      "type": "string"
+                      "type": "number",
+                      "format": "float"
                     },
                     "rank": {
-                      "type": "string"
+                      "type": "integer",
+                      "format": "int32"
                     },
                     "ath": {
-                      "type": "string"
+                      "type": "number",
+                      "format": "float"
                     },
                     "ath_timestamp": {
-                      "type": "string"
+                      "type": "string",
+                      "format": "date-time"
                     },
                     "timeframe": {
                       "type": "object",
                       "properties": {
                         "price_change": {
-                          "type": "string"
+                          "type": "number",
+                          "format": "float"
                         },
                         "price_change_pct": {
-                          "type": "string"
+                          "type": "number",
+                          "format": "float"
                         },
                         "volume": {
-                          "type": "string"
+                          "type": "number",
+                          "format": "float"
                         },
                         "volume_change_pct": {
-                          "type": "string"
+                          "type": "number",
+                          "format": "float"
                         },
                         "marketcap_change": {
-                          "type": "string"
+                          "type": "number",
+                          "format": "float"
                         },
                         "marketcap_change_pct": {
-                          "type": "string"
+                          "type": "number",
+                          "format": "float"
                         }
                       }
                     }
@@ -494,7 +514,17 @@
           }
         },
         "operationId": "get-market-fcas",
-        "description": "Returns the latest global cryptocurrency market metrics. Use the \"convert\" option to return market values in multiple fiat and cryptocurrency conversions in the same call."
+        "description": "Returns the latest global cryptocurrency market metrics. Use the \"convert\" option to return market values in multiple fiat and cryptocurrency conversions in the same call.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "convert",
+            "description": "The currency to convert the default USD values to. Must be a Fiat currency. Use the /conversion-rates endpoint to check which currencies are available"
+          }
+        ]
       },
       "parameters": []
     },
@@ -544,7 +574,17 @@
           }
         },
         "operationId": "get-exchanges",
-        "description": "Get a list of supported exchnages"
+        "description": "Get a list of supported exchnages",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "convert",
+            "description": "Currency to convert the volume to. Check the /conversion-rates endpoint to check the available currencies to convert to. "
+          }
+        ]
       }
     },
     "/social/twitter": {
@@ -867,17 +907,33 @@
         "title": "",
         "description": "",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "example": 23
-          },
           "source": {
             "$ref": "#/components/schemas/newsSource"
           },
-          "projects": {
+          "currencies": {
+            "description": "list of projects the newsitems related to",
             "type": "array",
-            "items": {}
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "format": "int32",
+                  "example": "2",
+                  "description": "id of the currency"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "bitcoin",
+                  "description": "name of the currency"
+                },
+                "symbol": {
+                  "type": "string",
+                  "example": "BTC",
+                  "description": "symbol of the currency"
+                }
+              }
+            }
           },
           "categories": {
             "$ref": "#/components/schemas/categories"
@@ -888,34 +944,48 @@
           "link": {
             "type": "string",
             "format": "uri",
-            "example": "https://www.newsbtc.com/2020/02/10/bitcoin-plunges-4-percent-bounces-back-10000-bull-trend-intact/"
+            "example": "https://www.newsbtc.com/2020/02/10/bitcoin-plunges-4-percent-bounces-back-10000-bull-trend-intact/",
+            "description": "Link to the newsitems"
           },
           "title": {
             "type": "string",
-            "format": "byte"
+            "description": "Title of the newsitem",
+            "example": "This Bitcoin Metric Is Over 100% Higher in 2 Months, and It’s Critical for Bulls"
           },
           "excerpt": {
             "type": "string",
-            "format": "byte"
+            "description": "excerpt of the newsitem",
+            "format": "byte",
+            "example": "Over the past 60 days, Bitcoin has found itself rocketing higher, rallying from a low of $6,400 to a local top of $10,500 in the span of two months."
           },
           "full_article": {
             "type": "string",
-            "format": "byte"
+            "description": "text of the full article if available",
+            "format": "byte",
+            "example": "Over the past few years, as institutional traders and more serious players have entered the Bitcoin market, the demand for future derivatives for the cryptocurrency has exploded.  This was confirmed with a report from industry outlet The Block.  They reported that as of February 13th, the aggregated amount of open interest on Bitcoin futures contracts surpassed $5 billion, with traders on BitMEX, OKEx, Bakkt, CME, and other key platforms throwing billions of dollars at the asset.  This is far above the approximately $4 billion in open interest seen in January of the $2.5 billion in December."
           },
           "publish_date": {
             "type": "string",
-            "format": "date-time"
+            "description": "publish date of the newsitem",
+            "format": "date-time",
+            "example": "2019-05-16T18:47:00.000Z"
           },
           "sentiment": {
             "type": "string",
-            "format": "byte"
+            "description": "sentiment of the news item",
+            "format": "byte",
+            "example": "POSITIVE"
           },
           "expert_level": {
             "type": "string",
-            "format": "byte"
+            "description": "Audience expert level for which the newsitem is best suited",
+            "format": "byte",
+            "example": "PRO"
           },
           "region": {
-            "type": "string"
+            "type": "string",
+            "description": "language of the article",
+            "example": "en"
           }
         }
       },
@@ -1021,12 +1091,14 @@
           },
           "expert_level": {
             "type": "string",
-            "format": "byte"
+            "format": "byte",
+            "example": "PRO"
           }
         }
       },
       "twitterSource": {
         "type": "object",
+        "description": "Returns all twitter sources crypto investor stream uses",
         "properties": {
           "id": {
             "type": "integer",
@@ -1035,66 +1107,56 @@
           },
           "username": {
             "type": "string",
-            "format": "byte"
+            "example": "@binance"
           },
           "region": {
             "type": "string",
-            "format": "byte"
+            "example": "EN"
           },
           "bio": {
             "type": "string",
-            "format": "byte"
+            "example": "Binance is the biggest exchange in the altcoin space"
           },
           "active": {
             "type": "boolean",
-            "example": false
+            "example": "true"
           }
-        },
-        "description": "Returns all twitter sources crypto investor stream uses"
+        }
       },
       "news-tags": {
         "type": "object",
+        "x-examples": {
+          "example": [
+            {
+              "id": 1,
+              "name": "stablecoins"
+            },
+            {
+              "id": 2,
+              "name": "security"
+            },
+            {
+              "id": 3,
+              "name": "malware"
+            }
+          ]
+        },
         "properties": {
           "id": {
             "type": "integer",
             "format": "int32",
-            "example": 2
+            "example": 2,
+            "description": "id of the tag"
           },
           "name": {
             "type": "string",
-            "format": "byte"
+            "description": "name of the tag",
+            "example": "stablecoins"
           }
-        },
-        "x-examples": {
-          "example": [
-            {
-              "id": "1",
-              "name": "stablecoins"
-            },
-            {
-              "id": "2",
-              "name": "security"
-            },
-            {
-              "id": "3",
-              "name": "malware"
-            }
-          ]
         }
       },
       "categories": {
         "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "example": 2
-          },
-          "name": {
-            "type": "string",
-            "format": "byte"
-          }
-        },
         "x-examples": {
           "example": [
             {
@@ -1110,6 +1172,19 @@
               "name": "exchange listing"
             }
           ]
+        },
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 2,
+            "description": "id for the category"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the category",
+            "example": "analysis"
+          }
         }
       },
       "newsSource": {
@@ -1129,17 +1204,18 @@
           ]
         },
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
           "name": {
-            "type": "string",
-            "format": "byte"
+            "type": "string"
           },
           "url": {
             "type": "string",
-            "example": "www.newsbtc.com"
+            "format": "uri",
+            "example": "http://www.newsbtc.com"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": "34"
           }
         }
       },
@@ -1269,26 +1345,30 @@
       },
       "fearAndGreed": {
         "type": "object",
-        "properties": {
-          "value": {
-            "type": "integer",
-            "format": "int32",
-            "example": 23
-          },
-          "value_classification": {
-            "type": "string",
-            "format": "byte"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
         "x-examples": {
           "example-1": {
             "value": "987",
             "value_classification": "A",
-            "timestamp": "2019-12-16T18:47:00.000Z"
+            "last_update": "2019-12-16T18:47:00.000Z"
+          }
+        },
+        "properties": {
+          "value": {
+            "type": "integer",
+            "description": "Fear and greed index value",
+            "format": "int32",
+            "example": "63"
+          },
+          "value_classification": {
+            "type": "string",
+            "description": "Classification for the fear and greed value",
+            "example": "FEAR"
+          },
+          "last_update": {
+            "type": "string",
+            "description": "Time of the last update",
+            "format": "date-time",
+            "example": "2018-11-08T22:18:00.000Z"
           }
         }
       },
@@ -1308,66 +1388,6 @@
       "exchange": {
         "title": "exchange",
         "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
-          },
-          "region": {
-            "type": "string"
-          },
-          "country": {
-            "type": "string"
-          },
-          "volume_24h": {
-            "type": "number"
-          },
-          "volumen_7d": {
-            "type": "number"
-          },
-          "volume_30d": {
-            "type": "number"
-          },
-          "volume_24_change_percent": {
-            "type": "number"
-          },
-          "volume_7d_change_percent": {
-            "type": "number"
-          },
-          "volume_30d_change_percent": {
-            "type": "number"
-          },
-          "active": {
-            "type": "boolean"
-          },
-          "last_update": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "blog": {
-            "type": "string",
-            "format": "uri"
-          },
-          "twitter": {
-            "type": "string",
-            "format": "uri"
-          },
-          "telegram": {
-            "type": "string",
-            "format": "uri"
-          },
-          "fees": {
-            "type": "string",
-            "format": "uri"
-          },
-          "website": {
-            "type": "string",
-            "format": "uri"
-          }
-        },
         "x-examples": {
           "example": [
             {
@@ -1376,12 +1396,16 @@
               "description": "Binance is a global cryptocurrency exchange that provides a platform for trading more than 100 cryptocurrencies. Since early 2018, Binance is considered as the biggest cryptocurrency exchange in the world in terms of trading volume",
               "region": "eu",
               "country": "Malta",
-              "volume_24h": "236797947.38",
-              "volume_7d": "4334436797947.38",
-              "volume_30d": "34343433797947.38",
-              "volume_24h_change_pct": "1.5563",
-              "volume_7d_change_pct": "2.3343",
-              "volume_30d_change_pct": "3.2333",
+              "volume": {
+                "USD": {
+                  "volume_24h": "236797947.38",
+                  "volume_7d": "4334436797947.38",
+                  "volume_30d": "34343433797947.38",
+                  "volume_24h_change_pct": "1.5563",
+                  "volume_7d_change_pct": "2.3343",
+                  "volume_30d_change_pct": "3.2333"
+                }
+              },
               "blog": "http://binance.com/blog",
               "twitter": "http://twitter.com/binance",
               "telegram": "https://t.me/binanceexchange",
@@ -1389,55 +1413,166 @@
               "website": "https://www.binance.com"
             }
           ]
+        },
+        "description": "",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": "23",
+            "description": "id of the exchange"
+          },
+          "name": {
+            "type": "string",
+            "example": "Binance",
+            "description": "Name of the exchange"
+          },
+          "region": {
+            "type": "string",
+            "example": "EU",
+            "description": "Region in which the exchange operates"
+          },
+          "country": {
+            "type": "string",
+            "example": "Malta",
+            "description": "Country where the exchange is located"
+          },
+          "active": {
+            "type": "boolean",
+            "example": "true",
+            "description": "Is the exchange active"
+          },
+          "last_update": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2020-02-11T22:04:01.727Z",
+            "description": "Time of the last update of the exchange information"
+          },
+          "blog": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://www.binance.com/blog",
+            "description": "Link to the blog of the exchange"
+          },
+          "twitter": {
+            "type": "string",
+            "format": "uri",
+            "example": "http://www.twitter.com/binance",
+            "description": "Link to the twitter account for the exchange"
+          },
+          "telegram": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://t.me/binanceexchange",
+            "description": "Limk to the telegram channel for the exchange"
+          },
+          "fees": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://www.binance.com/en/fee/schedule",
+            "description": "Link to the fees page of the exchange"
+          },
+          "website": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://www.bitcoin.com",
+            "description": "Link to the website of the exchange"
+          },
+          "rank": {
+            "type": "integer",
+            "format": "int32",
+            "example": "1",
+            "description": "Rank of the exchange based on adjusted volume"
+          },
+          "volume": {
+            "type": "object",
+            "description": "Volume information for the exchange",
+            "properties": {
+              "quote_currency": {
+                "type": "object",
+                "example": "USD",
+                "description": "Quote currency for the volume information. Use the convert query parameter to convert to a different currency",
+                "properties": {
+                  "volume_24h": {
+                    "type": "number",
+                    "format": "float",
+                    "example": "769291636.239632",
+                    "description": "24 hour volume"
+                  },
+                  "volume_7d": {
+                    "type": "number",
+                    "format": "float",
+                    "example": "3666423776",
+                    "description": "7 day volume"
+                  },
+                  "volume_30d": {
+                    "type": "number",
+                    "format": "float",
+                    "example": "21338299776",
+                    "description": "30 day volume"
+                  },
+                  "volume24h_change_percent": {
+                    "type": "number",
+                    "format": "float",
+                    "example": "-11.6153",
+                    "description": "Percentage change in 24 hour volume"
+                  },
+                  "volume_7d_change_percent": {
+                    "type": "number",
+                    "format": "float",
+                    "example": "67.2055",
+                    "description": "Percentage change in 7 days volume"
+                  },
+                  "volume_30d_change_percent": {
+                    "type": "number",
+                    "format": "float",
+                    "example": "0.00169339",
+                    "description": "Percentage change in 30 days volume"
+                  }
+                }
+              }
+            }
+          }
         }
       },
       "fcas": {
         "title": "fcas",
         "type": "object",
-        "properties": {
-          "project_id": {
-            "type": "integer"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "score": {
-            "type": "integer"
-          },
-          "grade": {
-            "type": "integer"
-          }
-        },
-        "description": "FCAS ratings for all available currencies"
-      },
-      "currencies": {
-        "title": "currencies",
-        "type": "object",
+        "description": "FCAS ratings for all available currencies",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "integer",
+            "description": "Currency id",
+            "format": "int32",
+            "example": "23"
           },
-          "symbol": {
-            "type": "string"
+          "last_update": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2018-11-08T22:18:00.000Z",
+            "description": "Time of the last update"
           },
-          "circulating_supply": {
-            "type": "string"
+          "score": {
+            "type": "integer",
+            "example": "788",
+            "minimum": 1,
+            "maximum": 1000,
+            "description": "FCAS Score for the currency"
           },
-          "total_supply": {
-            "type": "string"
+          "grade": {
+            "type": "string",
+            "format": "int32",
+            "example": "A",
+            "pattern": "[A-Z]",
+            "description": "FCAS grade for the currency"
           },
-          "max_supply": {
-            "type": "string"
-          },
-          "ath_usd": {
-            "type": "string"
-          },
-          "marketcap_usd": {
-            "type": "string"
-          },
-          "project": {
-            "$ref": "#/components/schemas/project"
+          "currency": {
+            "type": "string",
+            "description": "Currency symbol",
+            "example": "BTC",
+            "minLength": 2,
+            "maxLength": 6,
+            "pattern": "[A-Za-z0-9]"
           }
         }
       },
@@ -1461,7 +1596,6 @@
                 "total_volume_24h": 119270642406.968,
                 "total_volume_24h_reported": 1514905418.39087,
                 "altcoin_volume_24h": 119270642406.968,
-                "altcoin_volume_24h_reported": 1514905418.39087,
                 "altcoin_market_cap": 250385096532.124,
                 "last_updated": "2019-05-16T18:47:00.000Z"
               }
@@ -1475,60 +1609,58 @@
             "properties": {
               "quote_currency": {
                 "type": "object",
+                "description": "Market data in quoted currency",
                 "properties": {
                   "total_marketcap": {
-                    "type": "number"
+                    "type": "number",
+                    "description": "Total marketcap in quoted currency",
+                    "format": "float",
+                    "example": "250385096532.124"
                   },
                   "total_volume_24h": {
-                    "type": "number"
+                    "type": "number",
+                    "description": "Total 24 hour volume in quote currency",
+                    "format": "float",
+                    "example": "119270642406.968"
                   },
                   "altcoin_volume_24h": {
-                    "type": "number"
+                    "type": "number",
+                    "description": "24h altcoin volume in quoted currency",
+                    "format": "float",
+                    "example": "119270642406.968"
                   },
                   "altcoin_marketcap": {
-                    "type": "number"
+                    "type": "number",
+                    "description": "Total altcoin marketcap in quoted volume",
+                    "format": "float",
+                    "example": "250385096532.124"
                   },
                   "last_update": {
                     "type": "string",
-                    "format": "date-time"
+                    "description": "Last update of the market information",
+                    "format": "date-time",
+                    "example": "2019-05-16T18:47:00.000Z"
                   }
                 }
               }
             }
           },
           "eth-dominance": {
-            "type": "string"
+            "type": "number",
+            "format": "float",
+            "example": "9.02205",
+            "description": "Ethereum dominance"
           },
           "btc-dominance": {
-            "type": "string"
+            "type": "number",
+            "format": "float",
+            "example": "67.0057",
+            "description": "Bitcoin dominance"
           },
           "fear-and-greed": {
             "$ref": "#/components/schemas/fearAndGreed"
           }
         }
-      },
-      "market-volume": {
-        "title": "volume",
-        "type": "object",
-        "properties": {
-          "total_market_cap": {
-            "type": "string"
-          },
-          "total_volume_24h": {
-            "type": "string"
-          },
-          "total_volume_24h_reported": {
-            "type": "string"
-          },
-          "altcoin_volume_24h": {
-            "type": "string"
-          },
-          "altcoin_volume_24h_reported": {
-            "type": "string"
-          }
-        },
-        "description": "Market volume metrics represented in USD",
-        "x-examples": {}
       },
       "currency-metadata": {
         "title": "currency-metadata",
@@ -1571,38 +1703,57 @@
           }
         },
         "properties": {
-          "currency_id": {
-            "type": "string"
+          "id": {
+            "type": "integer",
+            "example": "23",
+            "description": "Currency id"
           },
           "logo_url": {
-            "type": "string"
+            "type": "string",
+            "format": "uri",
+            "example": "https://s3.us-east-2.amazonaws.com/cryptoinvestorstream/static/images/currencies/btc.svg",
+            "description": "Link to the logo of the currency"
           },
           "bio_short": {
-            "type": "string"
+            "type": "string",
+            "example": "Bitcoin (BTC) is a consensus network that enables a new payment system and a completely digital currency.",
+            "description": "Short description of the currency"
           },
           "bio_long": {
-            "type": "string"
+            "type": "string",
+            "example": "Bitcoin (BTC) is a consensus network that enables a new payment system and a completely digital currency. Powered by its users, it is a peer to peer payment network that requires no central authority to operate. On October 31st, 2008, an individual or group of individuals operating under the pseudonym \"Satoshi Nakamoto\" published the Bitcoin Whitepaper and described it as: \"a purely peer-to-peer version of electronic cash, which would allow online payments to be sent directly from one party to another without going through a financial institution.\"",
+            "description": "Long description of the currency"
           },
           "bio_keywords": {
-            "type": "string"
+            "type": "string",
+            "example": "BTC,Bitcoin",
+            "description": "Keywords related to the currency"
           },
           "hq_location": {
-            "type": "string"
+            "type": "string",
+            "example": "None",
+            "description": "Headquater location of the development team"
           },
           "vertical_types": {
             "type": "array",
+            "example": "['governance','health care']",
+            "description": "Vertical types which the currency belongs to",
             "items": {
               "$ref": "#/components/schemas/vertical-types"
             }
           },
           "links": {
             "type": "array",
+            "example": "[{'type': 'website', 'url': 'http://www.bitcoin.org'},{'type': 'website', 'url': 'http://www.ethereum.org'}]",
+            "description": "Link related to the currency",
             "items": {
               "$ref": "#/components/schemas/links"
             }
           },
           "communities": {
             "type": "array",
+            "example": "[{'type': 'twitter', 'url': 'http://www.twitter.com/bitcoin'},{'type': 'twitter', 'url': 'http://www.twitter.com/ethereum'}]",
+            "description": "Communities for the currency",
             "items": {
               "$ref": "#/components/schemas/communities"
             }
@@ -1613,6 +1764,7 @@
         "title": "links",
         "type": "object",
         "description": "Returns links related to the currency",
+        "x-examples": {},
         "properties": {
           "type": {
             "type": "string",
@@ -1625,11 +1777,15 @@
               "github",
               "announcement",
               "bounty-program"
-            ]
+            ],
+            "example": "website",
+            "description": "Link type"
           },
           "url": {
             "type": "string",
-            "format": "uri"
+            "format": "uri",
+            "example": "http://www.bitcoin.com",
+            "description": "Link URL"
           }
         }
       },
@@ -1651,11 +1807,13 @@
               "reddit",
               "bitcoin-talk",
               "instagram"
-            ]
+            ],
+            "example": "twitter"
           },
           "url": {
             "type": "string",
-            "format": "uri"
+            "format": "uri",
+            "example": "http://www.twitter.com/binance"
           }
         }
       },
@@ -1663,8 +1821,11 @@
         "title": "vertical-types",
         "type": "object",
         "properties": {
-          "vertical-types": {
-            "type": "object"
+          "id": {
+            "type": "string"
+          },
+          "vertical_type": {
+            "type": "string"
           }
         }
       }
