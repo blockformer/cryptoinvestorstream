@@ -283,11 +283,13 @@
                       "type": "array",
                       "description": "List of timestamps",
                       "example": "['2018-07-05T15:00:00Z','2018-07-05T15:00:00Z']",
+                      "uniqueItems": false,
+                      "minItems": 1,
                       "items": {
                         "type": "string"
                       }
                     },
-                    "pirces": {
+                    "prices": {
                       "type": "array",
                       "description": "array of prices in default: USD",
                       "example": "[12323.23233,12323.23233]",
@@ -298,7 +300,6 @@
                     "currency": {
                       "type": "string",
                       "description": "Currency symbol",
-                      "format": "byte",
                       "example": "BTC"
                     },
                     "id": {
@@ -316,9 +317,11 @@
                         "currency": "BTC",
                         "id": "1",
                         "timestamps": [
+                          "2018-04-03T16:00:00Z",
                           "2018-04-03T16:00:00Z"
                         ],
                         "prices": [
+                          "7436.82313",
                           "7436.82313"
                         ]
                       }
@@ -955,13 +958,11 @@
           "excerpt": {
             "type": "string",
             "description": "excerpt of the newsitem",
-            "format": "byte",
             "example": "Over the past 60 days, Bitcoin has found itself rocketing higher, rallying from a low of $6,400 to a local top of $10,500 in the span of two months."
           },
           "full_article": {
             "type": "string",
             "description": "text of the full article if available",
-            "format": "byte",
             "example": "Over the past few years, as institutional traders and more serious players have entered the Bitcoin market, the demand for future derivatives for the cryptocurrency has exploded.  This was confirmed with a report from industry outlet The Block.  They reported that as of February 13th, the aggregated amount of open interest on Bitcoin futures contracts surpassed $5 billion, with traders on BitMEX, OKEx, Bakkt, CME, and other key platforms throwing billions of dollars at the asset.  This is far above the approximately $4 billion in open interest seen in January of the $2.5 billion in December."
           },
           "publish_date": {
@@ -973,13 +974,11 @@
           "sentiment": {
             "type": "string",
             "description": "sentiment of the news item",
-            "format": "byte",
             "example": "POSITIVE"
           },
           "expert_level": {
             "type": "string",
             "description": "Audience expert level for which the newsitem is best suited",
-            "format": "byte",
             "example": "PRO"
           },
           "region": {
@@ -1045,11 +1044,6 @@
           }
         },
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "example": 2
-          },
           "source": {
             "$ref": "#/components/schemas/twitterSource"
           },
@@ -1064,34 +1058,41 @@
           },
           "message": {
             "type": "string",
-            "format": "byte"
+            "description": "message text of the tweet",
+            "example": "Crypto is very busy and many people just don’t have any time to learn about projects. Many are skeptical.Ravencoin has a different structure than most projects in that no one owns or controls it. This means the only way to hear about it is from other users."
           },
           "message_id": {
             "type": "integer",
+            "description": "Twitter message id",
             "format": "int64",
-            "example": 1197150607519305700
+            "example": "1197145520042631170"
           },
           "publish_date": {
             "type": "string",
-            "format": "date-time"
+            "description": "Publish date of the tweet",
+            "format": "date-time",
+            "example": "2018-05-14T00:04:31Z"
           },
           "sentiment": {
             "type": "string",
-            "format": "byte"
+            "description": "sentiment of the tweet",
+            "example": "NEUTRAL"
           },
           "retweet_count": {
             "type": "integer",
             "format": "int32",
-            "example": 323
+            "example": 323,
+            "description": "retweet count for the tweet"
           },
           "favorite_count": {
             "type": "integer",
             "format": "int32",
-            "example": 2332
+            "example": 2332,
+            "description": "favorite count for the tweet"
           },
           "expert_level": {
             "type": "string",
-            "format": "byte",
+            "description": "Audience expert level for the tweet content",
             "example": "PRO"
           }
         }
@@ -1103,23 +1104,28 @@
           "id": {
             "type": "integer",
             "format": "int32",
-            "example": 3
+            "example": 3,
+            "description": "id of the twitter source"
           },
           "username": {
             "type": "string",
-            "example": "@binance"
+            "example": "@binance",
+            "description": "twiter username of the twitters source"
           },
           "region": {
             "type": "string",
-            "example": "EN"
+            "example": "EN",
+            "description": "region of the source"
           },
           "bio": {
             "type": "string",
-            "example": "Binance is the biggest exchange in the altcoin space"
+            "example": "Binance is the biggest exchange in the altcoin space",
+            "description": "description of the twitter source"
           },
           "active": {
             "type": "boolean",
-            "example": "true"
+            "example": "true",
+            "description": "status of the twitter source"
           }
         }
       },
@@ -1224,47 +1230,55 @@
         }
       },
       "project": {
-        "required": [
-          "id"
-        ],
         "type": "object",
+        "title": "",
         "properties": {
           "id": {
             "type": "integer",
             "format": "int32",
-            "example": 3
+            "example": 3,
+            "description": "project id"
           },
           "name": {
             "type": "string",
-            "format": "byte"
+            "description": "project name",
+            "example": "Ethereum"
           },
           "image-url": {
             "type": "string",
-            "example": "https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/btc.svg"
+            "example": "https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/btc.svg",
+            "description": "link to the logo url for the project"
           },
           "bio_short": {
             "type": "string",
-            "format": "byte"
+            "description": "Short description of the project",
+            "example": "Ethereum is an open source, public, blockchain-based distributed computing platform and operating system featuring smart contract functionality."
           },
           "bio_long": {
             "type": "string",
-            "format": "byte"
+            "description": "Long description of the project",
+            "example": "Ethereum is an open source, public, blockchain-based distributed computing platform and operating system featuring smart contract functionality. It supports a modified version of Nakamoto consensus via transaction-based state transitions"
           },
           "hq_location": {
             "type": "string",
-            "format": "byte"
+            "description": "Location of the project headquaters",
+            "example": "Toronto"
           },
           "platform": {
             "type": "integer",
             "format": "int32",
-            "example": 23
+            "example": 23,
+            "description": "Platform the project is built on"
           },
           "platform-token-address": {
             "type": "string",
-            "format": "byte"
+            "description": "Address of the project on the platform it is build on. ",
+            "example": "qewqweqwds23qwe3423e"
           }
         },
-        "title": ""
+        "required": [
+          "id"
+        ]
       },
       "fearAndGreed": {
         "type": "object",
@@ -1512,7 +1526,7 @@
             "btc_dominace": "",
             "eth_dominance": "",
             "fear-and-greed-index": {
-              "value": "987",
+              "value": 987,
               "value_classification": "A",
               "timestamp": "2019-12-16T18:47:00.000Z"
             },
@@ -1749,10 +1763,12 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "integer",
+            "example": "34"
           },
           "vertical_type": {
-            "type": "string"
+            "type": "string",
+            "example": "Governance"
           }
         }
       }
