@@ -35,6 +35,15 @@ paths:
                     type: string
                     description: currency symbol
                     example: BTC
+              examples:
+                example:
+                  value:
+                    - id: 1
+                      name: Bitcoin
+                      symbol: BTC
+                    - id: 3
+                      name: Ethereum
+                      symbol: ETH
       operationId: get-currencies
       description: "Returns a list of all supported currencies. Always use the id's gathered here to lookup data for specific currencies. "
   /currencies/metadata/:
@@ -216,10 +225,9 @@ paths:
                       market_cap_change_pct:
                         type: string
                         description: Percent change of market_cap for the given timeframe
-                      quote_currency:
-                        type: string
                   quote-currency:
                     type: string
+                    description: Quote currency
               examples:
                 example:
                   value:
@@ -235,6 +243,7 @@ paths:
                     rank: '1'
                     high: '19404.81116899'
                     high_timestamp: '2017-12-16'
+                    quote_cuurency: EUR
                     1d:
                       price_change: '269.75208019'
                       price_change_pct: '0.03297053'
@@ -253,12 +262,61 @@ paths:
             type: string
           in: query
           name: convert
+      description: 'Price, volume, market cap, and rank for all currencies across 5 minute, 15 minute, 30minute, 1 hour, 1 day, 7 day, 30 day, 365 day, and year to date intervals. Current prices are updated every minute'
   /exchanges:
     get:
       summary: Your GET endpoint
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: A list of supported exchanges and the metadata information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: Name of the exchange
+                  country:
+                    type: string
+                  active:
+                    type: string
+                  region:
+                    type: string
+                  last_update:
+                    type: string
+                  blog:
+                    type: string
+                  website:
+                    type: string
+                  twitter:
+                    type: string
+                  telegram:
+                    type: string
+                  feed:
+                    type: string
+                  rank:
+                    type: string
+                  volume:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        volume_24h:
+                          type: string
+                        volume_7d:
+                          type: string
+                        volume_30d:
+                          type: string
+                        volume_24h_change_pct:
+                          type: string
+                        volume_7d_change_pct:
+                          type: string
+                        volume_30d_change_pct:
+                          type: string
       operationId: get-exchanges
+      description: Get a list of supported exchanges
   /market:
     get:
       summary: Your GET endpoint
