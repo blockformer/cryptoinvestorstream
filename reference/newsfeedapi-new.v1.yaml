@@ -1,0 +1,314 @@
+openapi: 3.0.0
+info:
+  title: newsfeedapi-new
+  version: '1.0'
+  contact:
+    name: Crypto Investor Stream Api Team
+    url: 'http://cryptonvestor.stream/api'
+    email: api@cryptoinvestor.stream
+  description: 'API for fetching cryptocurrency price, market and news data'
+  termsOfService: 'https://cryptoinvestor.stream/terms'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /currencies:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: currency id
+                    example: '23'
+                  name:
+                    type: string
+                    description: currency name
+                    example: Bitcoin
+                  symbol:
+                    type: string
+                    description: currency symbol
+                    example: BTC
+      operationId: get-currencies
+      description: "Returns a list of all supported currencies. Always use the id's gathered here to lookup data for specific currencies. "
+  /currencies/metadata/:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: id of the currency
+                    example: '1'
+                  name:
+                    type: string
+                    description: Name
+                    example: Bitcoin
+                  bio_short:
+                    type: string
+                    description: Short description
+                    example: Bitcoin (BTC) is a consensus network that enables a new payment system and a completely digital currency.
+                  bio_long:
+                    type: string
+                    description: Long description of the currency
+                    example: 'Bitcoin (BTC) is a consensus network that enables a new payment system and a completely digital currency. Powered by its users, it is a peer to peer payment network that requires no central authority to operate. On October 31st, 2008, an individual or group of individuals operating under the pseudonym "Satoshi Nakamoto" published the Bitcoin Whitepaper and described it as: "a purely peer-to-peer version of electronic cash, which would allow online payments to be sent directly from one party to another without going through a financial institution."'
+                  logo_url:
+                    type: string
+                    description: Link to the logo
+                    format: uri
+                    example: 'https://s3.us-east-2.amazonaws.com/cryptoinvestorstream/static/images/currencies/btc.svg'
+                  hq_location:
+                    type: string
+                    description: Headquaters location
+                    example: New York
+                  vertical:
+                    type: array
+                    description: The verticals the currency belongs to
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: id of the vertical
+                        name:
+                          type: string
+                          description: name of the vertial
+                        description:
+                          type: string
+                          description: Description of the vertical
+                  links:
+                    type: array
+                    description: Links related to the currency
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: Link type
+                        url:
+                          type: string
+                          description: URL to the link
+                  communities:
+                    type: array
+                    description: Communities for the currency
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: Community type
+                        url:
+                          type: string
+                          description: URL to the community
+                  symbol:
+                    type: string
+                    description: The symbol of the currency
+              examples:
+                example:
+                  value:
+                    id: '1'
+                    symbol: BTC
+                    logo_url: 'https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/btc.svg'
+                    bio_short: Bitcoin is a cryptocurrency.
+                    bio_long: Bitcoin is a cryptocurrency. It is a decentralized digital currency
+                    bio_keywords: 'BTC,Bitcoin'
+                    hq_location: Malta
+                    vertical_types:
+                      id: '269.75208019'
+                      name: '0.03297053'
+                      description: '1110989572.04'
+                    communities:
+                      - type: twitter
+                        url: 'http://www.twitter.com/bitcoin'
+                      - type: discord
+                        url: 'http://www.discord.com/bitcoin'
+                    links:
+                      - type: website
+                        url: 'http://www.bitcoin.com'
+                      - type: website
+                        url: 'http://www.bitcoin.com'
+      operationId: get-currencies-metadata
+      description: Get detailed meta information about the currency
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: ids
+          description: The id or ids of the currencies you need the metadata for
+          required: true
+  /currencies/ticker:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    description: id of the currency
+                    type: string
+                  symbol:
+                    type: string
+                    description: symbol of the currency
+                  price:
+                    description: 'price default in USD, use convert to change to a different currency'
+                    type: string
+                  price_date:
+                    type: string
+                    description: last update of the price
+                  circulating_supply:
+                    type: string
+                    description: circulating supply of the currency
+                  max_supply:
+                    description: maximum supply of the currency
+                    type: string
+                  logo_url:
+                    type: string
+                    description: URL for the logo of the currency
+                  market_cap:
+                    description: 'currenct marketcap of the currency in USD, use convert to change to a different currency'
+                    type: string
+                  rank:
+                    description: rank of the currency based on volume
+                    type: string
+                  ath:
+                    description: 'All time high of the currency in USD, use convert to change to a different currency'
+                    type: string
+                  ath_date:
+                    type: string
+                    description: The date on which the ATH was reached
+                  timeframe:
+                    type: object
+                    description: 'Timeframe for the data eg. 1h, 24h, 7d, 30d'
+                    properties:
+                      price_change:
+                        type: string
+                        description: 'Change in price in USD, use convert to change to a different currency'
+                      price_change_pct:
+                        type: string
+                        description: Percent change of price for the given timeframe
+                      volume:
+                        type: string
+                        description: 'Total volume for the given timeframe, default in USD'
+                      volume_change_pct:
+                        type: string
+                        description: Percent change of volume for the given timeframe
+                      market_cap_change:
+                        type: string
+                        description: Amount of market cap change for the given timeframe
+                      market_cap_change_pct:
+                        type: string
+                        description: Percent change of market_cap for the given timeframe
+                      quote_currency:
+                        type: string
+                  quote-currency:
+                    type: string
+              examples:
+                example:
+                  value:
+                    id: BTC
+                    price: '8451.36516421'
+                    price_date: '2019-06-14'
+                    symbol: BTC
+                    circulating_supply: '17758462'
+                    max_supply: '21000000'
+                    name: Bitcoin
+                    logo_url: 'https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/btc.svg'
+                    market_cap: '150083247116.70'
+                    rank: '1'
+                    high: '19404.81116899'
+                    high_timestamp: '2017-12-16'
+                    1d:
+                      price_change: '269.75208019'
+                      price_change_pct: '0.03297053'
+                      volume: '1110989572.04'
+                      volume_change: '-24130098.49'
+                      volume_change_pct: '-0.02'
+                      market_cap_change: '4805518049.63'
+                      market_cap_change_pct: '0.03'
+      operationId: get-currencies-ticker
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: ids
+        - schema:
+            type: string
+          in: query
+          name: convert
+  /exchanges:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-exchanges
+  /market:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-market
+  /news/:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-news
+  /news/sources:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-news-sources
+  /news/categories:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-news-categories
+  /news/tags:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-news-tags
+  /news/twitter:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-news-twitter
+  /news/twitter-sources:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-news-twitter-sources
+components:
+  schemas: {}
+  securitySchemes:
+    API Key Query:
+      name: api_key
+      type: apiKey
+      in: query
+    API Key Header:
+      name: X-API-KEY
+      type: apiKey
+      in: query

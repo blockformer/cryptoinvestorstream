@@ -87,126 +87,6 @@
       },
       "parameters": []
     },
-    "/news/sources": {
-      "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "": {
-                      "$ref": "#/components/schemas/newsSource"
-                    }
-                  }
-                },
-                "examples": {
-                  "example": {
-                    "value": [
-                      {
-                        "id": "2",
-                        "name": "NewsBTC",
-                        "url": "https://www.newsbtc.com/"
-                      },
-                      {
-                        "id": "4",
-                        "name": "Trustnodes",
-                        "url": "https://www.trustnodes.com/"
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "get-news-sources",
-        "description": "Return a list of news sources. "
-      }
-    },
-    "/currencies/metadata": {
-      "parameters": [],
-      "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/currency-metadata"
-                }
-              }
-            }
-          },
-          "": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/currency-metadata"
-                },
-                "examples": {
-                  "example": {
-                    "value": {
-                      "id": "1",
-                      "symbol": "BTC",
-                      "logo_url": "https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/btc.svg",
-                      "bio_short": "Bitcoin is a cryptocurrency.",
-                      "bio_long": "Bitcoin is a cryptocurrency. It is a decentralized digital currency",
-                      "bio_keywords": "BTC,Bitcoin",
-                      "hq_location": "Malta",
-                      "vertical_types": {
-                        "id": "269.75208019",
-                        "name": "0.03297053",
-                        "description": "1110989572.04"
-                      },
-                      "communities": [
-                        {
-                          "type": "twitter",
-                          "url": "http://www.twitter.com/bitcoin"
-                        },
-                        {
-                          "type": "discord",
-                          "url": "http://www.discord.com/bitcoin"
-                        }
-                      ],
-                      "links": [
-                        {
-                          "type": "website",
-                          "url": "http://www.bitcoin.com"
-                        },
-                        {
-                          "type": "website",
-                          "url": "http://www.bitcoin.com"
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "get-currencies-id-metadata",
-        "description": "Retrun the metadata for the currency ids provided",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "ids",
-            "description": "list of currency ids to return the metadata for",
-            "required": true
-          }
-        ]
-      }
-    },
     "/currencies/{id}/sparkline": {
       "parameters": [
         {
@@ -282,7 +162,6 @@
                     "timestamps": {
                       "type": "array",
                       "description": "List of timestamps",
-                      "example": "['2018-07-05T15:00:00Z','2018-07-05T15:00:00Z']",
                       "uniqueItems": false,
                       "minItems": 1,
                       "items": {
@@ -292,7 +171,7 @@
                     "prices": {
                       "type": "array",
                       "description": "array of prices in default: USD",
-                      "example": "[12323.23233,12323.23233]",
+                      "examples": "[12323.23233,12323.23233]",
                       "items": {
                         "type": "number"
                       }
@@ -306,7 +185,7 @@
                       "type": "integer",
                       "description": "Currency id",
                       "format": "int32",
-                      "example": "1"
+                      "example": 1
                     }
                   }
                 },
@@ -315,7 +194,7 @@
                     "value": [
                       {
                         "currency": "BTC",
-                        "id": "1",
+                        "id": 1,
                         "timestamps": [
                           "2018-04-03T16:00:00Z",
                           "2018-04-03T16:00:00Z"
@@ -901,6 +780,47 @@
         ],
         "description": "Return a list of the latest news items, limit to currencties, region or amount of news items. "
       }
+    },
+    "/news/sources": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "": {
+                      "$ref": "#/components/schemas/newsSource"
+                    }
+                  }
+                },
+                "examples": {
+                  "example": {
+                    "value": [
+                      {
+                        "id": "2",
+                        "name": "NewsBTC",
+                        "url": "https://www.newsbtc.com/"
+                      },
+                      {
+                        "id": "4",
+                        "name": "Trustnodes",
+                        "url": "https://www.trustnodes.com/"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-news-sources",
+        "description": "Return a list of news sources. "
+      }
     }
   },
   "components": {
@@ -922,7 +842,7 @@
                 "id": {
                   "type": "integer",
                   "format": "int32",
-                  "example": "2",
+                  "example": 2,
                   "description": "id of the currency"
                 },
                 "name": {
@@ -1223,9 +1143,8 @@
           },
           "id": {
             "type": "integer",
-            "format": "int32",
-            "example": "34",
-            "description": "id of the news source"
+            "description": "id of the news source",
+            "example": "32"
           }
         }
       },
