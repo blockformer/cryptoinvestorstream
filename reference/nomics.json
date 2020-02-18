@@ -325,7 +325,7 @@
         "description": "The currencies endpoint returns all the currencies and their metadata that Nomics supports.\n",
         "parameters": [
           {
-            "$ref": "#/components/parameters/currency-ids"
+            "in": "query"
           },
           {
             "$ref": "#/components/parameters/currency-attributes"

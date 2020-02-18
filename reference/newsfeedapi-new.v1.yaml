@@ -8,6 +8,9 @@ info:
     email: api@cryptoinvestor.stream
   description: 'API for fetching cryptocurrency price, market and news data'
   termsOfService: 'https://cryptoinvestor.stream/terms'
+  license:
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+    name: Apache 2.0
 servers:
   - url: 'http://localhost:3000'
 paths:
@@ -171,38 +174,51 @@ paths:
                 type: object
                 properties:
                   id:
-                    description: id of the currency
                     type: string
+                    description: id of the currency
+                    example: '1'
                   symbol:
                     type: string
                     description: symbol of the currency
+                    example: BTC
                   price:
-                    description: 'price default in USD, use convert to change to a different currency'
                     type: string
+                    description: 'price default in USD, use convert to change to a different currency'
+                    example: '8451.36516421'
                   price_date:
                     type: string
-                    description: last update of the price
+                    description: last update of the price in RFC3339
+                    example: '2018-07-05T15:00:00Z'
                   circulating_supply:
                     type: string
                     description: circulating supply of the currency
+                    example: '17758462'
                   max_supply:
-                    description: maximum supply of the currency
                     type: string
+                    description: maximum supply of the currency
+                    example: '21000000'
                   logo_url:
                     type: string
                     description: URL for the logo of the currency
+                    format: uri
+                    example: 'https://s3.us-east-2.amazonaws.com/cis/static/images/currencies/btc.svg'
                   market_cap:
+                    type: string
                     description: 'currenct marketcap of the currency in USD, use convert to change to a different currency'
-                    type: string
+                    example: '150083247116.70'
                   rank:
+                    type: string
                     description: rank of the currency based on volume
-                    type: string
+                    example: '1'
                   ath:
-                    description: 'All time high of the currency in USD, use convert to change to a different currency'
                     type: string
+                    description: 'All time high of the currency in USD, use convert to change to a different currency'
+                    example: '19404.81116899'
                   ath_date:
                     type: string
                     description: The date on which the ATH was reached
+                    format: date
+                    example: '2017-12-16'
                   timeframe:
                     type: object
                     description: 'Timeframe for the data eg. 1h, 24h, 7d, 30d'
@@ -210,24 +226,31 @@ paths:
                       price_change:
                         type: string
                         description: 'Change in price in USD, use convert to change to a different currency'
+                        example: '269.75208019'
                       price_change_pct:
                         type: string
                         description: Percent change of price for the given timeframe
+                        example: '0.03297053'
                       volume:
                         type: string
                         description: 'Total volume for the given timeframe, default in USD'
+                        example: '1110989572.04'
                       volume_change_pct:
                         type: string
                         description: Percent change of volume for the given timeframe
+                        example: '24130098.49'
                       market_cap_change:
                         type: string
                         description: Amount of market cap change for the given timeframe
+                        example: '4805518049.63'
                       market_cap_change_pct:
                         type: string
                         description: Percent change of market_cap for the given timeframe
+                        example: '0.03'
                   quote-currency:
                     type: string
                     description: Quote currency
+                    example: USD
               examples:
                 example:
                   value:
@@ -280,24 +303,34 @@ paths:
                     description: Name of the exchange
                   country:
                     type: string
+                    description: 'Country where the exchnge is based out of '
                   active:
-                    type: string
+                    type: boolean
+                    description: Is the exchange operational
                   region:
                     type: string
+                    description: Region where the exchange operates
                   last_update:
                     type: string
+                    description: When was this information last updated
                   blog:
                     type: string
+                    description: URL for the blog of the exchange
                   website:
                     type: string
+                    description: Website URL for the exchange
                   twitter:
                     type: string
+                    description: Twitter URL for the exchange
                   telegram:
                     type: string
-                  feed:
+                    description: Link to the Telegram community for the exchange
+                  fees:
                     type: string
+                    description: Link to fees page
                   rank:
                     type: string
+                    description: Rank of the exchange based on adjusted volume
                   volume:
                     type: array
                     items:
@@ -305,53 +338,384 @@ paths:
                       properties:
                         volume_24h:
                           type: string
+                          description: 24 hour volume information for the exchange
                         volume_7d:
                           type: string
+                          description: 7 day volume information for the exchange
                         volume_30d:
                           type: string
+                          description: 30 day volume information for the exchange
                         volume_24h_change_pct:
                           type: string
+                          description: 24 hour volume change percentile
                         volume_7d_change_pct:
                           type: string
+                          description: 7 day volume change percentile
                         volume_30d_change_pct:
                           type: string
+                          description: 30 day volume change percentile
       operationId: get-exchanges
       description: Get a list of supported exchanges
   /market:
     get:
       summary: Your GET endpoint
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  quote:
+                    type: object
+                    properties:
+                      quote_currency:
+                        type: object
+                        description: Market information in converted currency default is USD
+                        properties:
+                          total_marketcap:
+                            type: string
+                            description: 'Total marketcap '
+                          total_volume_24h:
+                            type: string
+                            description: Total volume in the last 24 hours
+                          altcoin_volume_24h:
+                            type: string
+                            description: Altcoin volume in the last 24 hours
+                          altcoin_marketcap:
+                            type: string
+                            description: Total altcoin marketcap
+                          last_update:
+                            type: string
+                            description: Time of the last update
+                  eth-dominance:
+                    type: string
+                    description: "Ethereum's market dominance percentage by market cap."
+                  btc-dominace:
+                    type: string
+                    description: "Bitcoin's market dominance percentage by market cap."
+                  fear-and-greed:
+                    type: object
+                    description: Fear and greed index values
+                    properties:
+                      value:
+                        type: string
+                        description: 'Value of the fear and greed index '
+                      value_specification:
+                        type: string
+                        description: 'Value specification Extreme Fear, Fear, Greed, Extreme Greed'
+                      last_update:
+                        type: string
+                        description: Time of the last update of the fear and greed value
       operationId: get-market
+      description: 'Returns the latest global cryptocurrency market metrics. Use the "convert" query paramter  to return market values in multiple fiat and cryptocurrency conversions in the same call.'
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: convert
+          description: he currency to convert the default USD values to. Must be a Fiat currency. Use the /conversion-rates endpoint to check which currencies are available
   /news/:
     get:
       summary: Your GET endpoint
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  source:
+                    type: object
+                    description: Information about the source of the news article
+                    properties:
+                      id:
+                        type: string
+                        description: id of the source. Get all ids from /news/sources
+                      name:
+                        type: string
+                        description: Name of the news source
+                      url:
+                        type: string
+                        description: URL of the news source
+                        format: uri
+                  currencies:
+                    type: array
+                    description: A list of currencies the news article relates to
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: id of the currency. Get a list of all currency ids via /currencies/
+                        name:
+                          type: string
+                          description: Name of the currency
+                        symbol:
+                          type: string
+                          description: Symbol of the currency
+                  categories:
+                    type: array
+                    description: List of categories the news article related to. Get all categories with /news/categories
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: Category id
+                        name:
+                          type: string
+                          description: Name of the category
+                  tags:
+                    type: array
+                    description: Tags related to the news article
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: 'id of the tag, get all tags with /news/tags'
+                        name:
+                          type: string
+                          description: Name of the tag
+                  link:
+                    type: string
+                    description: Link to the news article
+                    format: uri
+                  title:
+                    type: string
+                    description: Title of the news article
+                  excerpt:
+                    type: string
+                    description: Excerpt of the news article
+                  full-article:
+                    type: string
+                    description: Full article text
+                  publish_date:
+                    type: string
+                    format: date-time
+                    description: Publish date of the article
+                  sentiment:
+                    type: string
+                    description: Sentiment of the article
+                  expert-level:
+                    type: string
+                    description: Expert level of the audience this article is suitable for
+                  region:
+                    type: string
+                    description: Region or language this artivle is suitable for
+              examples:
+                example:
+                  value:
+                    id: '2332'
+                    source:
+                      id: ''
+                      name: ''
+                      url: ''
+                    currencies:
+                      - id: '2'
+                        symbol: ETH
+                        name: Ethereum
+                      - id: '1'
+                        symbol: BTC
+                        name: Bitcoin
+                    categories:
+                      - id: '1'
+                        name: Project news
+                      - id: '2'
+                        name: Regulation
+                    tags:
+                      - id: '1'
+                        name: stablecoins
+                    link: 'https://www.newsbtc.com/2020/02/13/okex-btcusd-options-registers-trading-volume-of-usd175-6m-volume-in-its-very-first-month/'
+                    title: OKEx BTCUSD Options Registers Trading Volume of USD175.6M Volume in its Very First Month
+                    excerpt: The leading cryptocurrency and digital asset trading platform OKEx is having a great run as it continues to provide world-class trading products for the global crypto community. The recently launched BTCUSD options trading feature on the platform is reported to have garnered volumes of around $176 million within a span of one month. The figures...
+                    publish_date: '2018-07-05T15:00:00Z'
+                    sentiment: POSITIVE
+                    expert_level: PRO
+                    region: en
       operationId: get-news
+      parameters:
+        - schema:
+            type: string
+            enum:
+              - en
+              - fr
+              - es
+              - pt
+              - de
+              - nl
+            default: en
+          in: query
+          name: region
+          description: 'Select the region/language to limit the results to. '
+        - schema:
+            type: string
+          in: query
+          name: ids
+          description: List of currency ids to limit the results to
+        - schema:
+            type: string
+            default: '10'
+            maxLength: 0
+            minLength: 1
+          in: query
+          name: limit
+          description: Amount of news articles to limit the results to
+        - schema:
+            type: string
+          in: query
+          name: verticals
+          description: List of vertical ids to limit the results to
+        - schema:
+            type: string
+            maxLength: 0
+            minLength: 1
+          in: query
+          name: start
+          description: Optionally offset the start (1-based index) of the paginated list of items to return.
+      description: 'Returns a curated lists of the latest news items. '
   /news/sources:
     get:
       summary: Your GET endpoint
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: id of the source
+                  name:
+                    type: string
+                    description: Name of the source
+                  url:
+                    type: string
+                    description: URL of the source website
+              examples:
+                example:
+                  value:
+                    - id: '2'
+                      name: NewsBTC
+                      url: 'https://www.newsbtc.com/'
+                    - id: '4'
+                      name: Trustnodes
+                      url: 'https://www.trustnodes.com/'
       operationId: get-news-sources
+      description: Returns a list of the sources used in the news feed
   /news/categories:
     get:
       summary: Your GET endpoint
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: id of the category
+                  name:
+                    type: string
+                    description: name of the category
+              examples:
+                example:
+                  value:
+                    - id: '1'
+                      name: adoptation
+                    - id: '2'
+                      name: analysis
+                    - id: '3'
+                      name: exchange listing
       operationId: get-news-categories
+      description: Returns a list of available categories
   /news/tags:
     get:
       summary: Your GET endpoint
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: id of the tag
+                  name:
+                    type: string
+                    description: name of the tag
+              examples:
+                example:
+                  value:
+                    - id: '1'
+                      name: stablecoins
+                    - id: '2'
+                      name: security
+                    - id: '3'
+                      name: malware
       operationId: get-news-tags
+      description: Returns a list of tags which are used
   /news/twitter:
     get:
       summary: Your GET endpoint
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                example:
+                  value:
+                    id: ''
+                    source:
+                      id: ''
+                      name: ''
+                    projects:
+                      - id: '2'
+                        symbol: ETH
+                        name: Ethereum
+                      - id: '1'
+                        symbol: BTC
+                        name: Bitcoin
+                    categories:
+                      - id: '1'
+                        name: Project news
+                      - id: '2'
+                        name: Regulation
+                    exchanges:
+                      - id: '1'
+                        name: Binance
+                    tags:
+                      - id: '1'
+                        name: stablecoins
+                    message: 'At #Crypto Center we are looking for franchisees with an entrepreneurial &amp; managerial spirit, a strong sense of interpersonal skills. #Franchisees who know how to train &amp; motivate their employees, driven by passion.In-depth :play_button: https://t.co/4H6I2jh1tx#Peculium #invest #success https://t.co/4ykvMnydEj'
+                    message_id: '12123123344555'
+                    publish_date: '2018-07-05T15:00:00Z'
+                    sentiment: POSITIVE
+                    retweet_count: '121'
+                    favorite_count: '2323'
+                    expert_level: PRO
+                    link: 'https://www.newsbtc.com/2020/02/13/okex-btcusd-options-registers-trading-volume-of-usd175-6m-volume-in-its-very-first-month/'
+                    title: OKEx BTCUSD Options Registers Trading Volume of USD175.6M Volume in its Very First Month
+                    excerpt: The leading cryptocurrency and digital asset trading platform OKEx is having a great run as it continues to provide world-class trading products for the global crypto community. The recently launched BTCUSD options trading feature on the platform is reported to have garnered volumes of around $176 million within a span of one month. The figures...
       operationId: get-news-twitter
   /news/twitter-sources:
     get:
