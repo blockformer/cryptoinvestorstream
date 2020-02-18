@@ -17,7 +17,8 @@ paths:
   /currencies:
     get:
       summary: Your GET endpoint
-      tags: []
+      tags:
+        - partner
       responses:
         '200':
           description: OK
@@ -38,6 +39,8 @@ paths:
                     type: string
                     description: currency symbol
                     example: BTC
+                  active:
+                    type: boolean
               examples:
                 example:
                   value:
@@ -49,7 +52,17 @@ paths:
                       symbol: ETH
       operationId: get-currencies
       description: "Returns a list of all supported currencies. Always use the id's gathered here to lookup data for specific currencies. "
-  /currencies/metadata/:
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: verticals
+          description: 'Optional: Limit the results to currencies in the provided verticals'
+        - schema:
+            type: string
+          in: query
+          name: listing_status
+  /currencies/metadata:
     get:
       summary: Your GET endpoint
       tags: []
@@ -95,12 +108,15 @@ paths:
                         id:
                           type: string
                           description: id of the vertical
+                          example: '1'
                         name:
                           type: string
                           description: name of the vertial
+                          example: Healthcare
                         description:
                           type: string
                           description: Description of the vertical
+                          example: Currencies in the healthcare business
                   links:
                     type: array
                     description: Links related to the currency
@@ -110,9 +126,11 @@ paths:
                         type:
                           type: string
                           description: Link type
+                          example: website
                         url:
                           type: string
                           description: URL to the link
+                          example: 'https://www.bitcoin.com'
                   communities:
                     type: array
                     description: Communities for the currency
@@ -122,12 +140,15 @@ paths:
                         type:
                           type: string
                           description: Community type
+                          example: twitter
                         url:
                           type: string
                           description: URL to the community
+                          example: 'http://www.twitter.com/@bitcoin'
                   symbol:
                     type: string
                     description: The symbol of the currency
+                    example: BTC
               examples:
                 example:
                   value:
@@ -139,9 +160,9 @@ paths:
                     bio_keywords: 'BTC,Bitcoin'
                     hq_location: Malta
                     vertical_types:
-                      id: '269.75208019'
-                      name: '0.03297053'
-                      description: '1110989572.04'
+                      id: '12'
+                      name: Healthcare
+                      description: Currencies that are in the healthcare business
                     communities:
                       - type: twitter
                         url: 'http://www.twitter.com/bitcoin'
@@ -159,8 +180,9 @@ paths:
             type: string
           in: query
           name: ids
-          description: The id or ids of the currencies you need the metadata for
+          description: The id or ids of the currencies you want the metadata for
           required: true
+    parameters: []
   /currencies/ticker:
     get:
       summary: Your GET endpoint
@@ -462,7 +484,7 @@ paths:
           in: query
           name: convert
           description: he currency to convert the default USD values to. Must be a Fiat currency. Use the /conversion-rates endpoint to check which currencies are available
-  /news/:
+  /news:
     get:
       summary: Your GET endpoint
       tags: []
@@ -624,6 +646,7 @@ paths:
           name: start
           description: Optionally offset the start (1-based index) of the paginated list of items to return.
       description: 'Returns a curated lists of the latest news items. '
+    parameters: []
   /news/sources:
     get:
       summary: Your GET endpoint
@@ -639,12 +662,15 @@ paths:
                   id:
                     type: string
                     description: id of the source
+                    example: '1'
                   name:
                     type: string
                     description: Name of the source
+                    example: NewsBTC
                   url:
                     type: string
                     description: URL of the source website
+                    example: 'https://newsbtc.com'
               examples:
                 example:
                   value:
@@ -656,6 +682,13 @@ paths:
                       url: 'https://www.trustnodes.com/'
       operationId: get-news-sources
       description: Returns a list of the sources used in the news feed
+      parameters:
+        - schema:
+            type: string
+            default: en
+          in: query
+          name: region
+          description: 'Optional: Limit results to sources from the specified regions'
   /news/categories:
     get:
       summary: Your GET endpoint
@@ -671,9 +704,11 @@ paths:
                   id:
                     type: string
                     description: id of the category
+                    example: '1'
                   name:
                     type: string
                     description: name of the category
+                    example: adoptation
               examples:
                 example:
                   value:
@@ -881,10 +916,34 @@ paths:
                     title: OKEx BTCUSD Options Registers Trading Volume of USD175.6M Volume in its Very First Month
                     excerpt: The leading cryptocurrency and digital asset trading platform OKEx is having a great run as it continues to provide world-class trading products for the global crypto community. The recently launched BTCUSD options trading feature on the platform is reported to have garnered volumes of around $176 million within a span of one month. The figures...
       operationId: get-news-twitter
+      description: Return the latest twitter messages
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: ids
+          description: 'Optional: List of currency ids to limit results to.'
+        - schema:
+            type: string
+          in: query
+          name: verticals
+          description: 'Optional: Limit the results to tweet from currencies in the specified verticals.'
+        - schema:
+            type: string
+          in: query
+          name: start
+          description: Optionally offset the start (1-based index) of the paginated list of items to return.
+        - schema:
+            type: string
+            default: '10'
+          in: query
+          name: limit
+          description: 'Optional: Amount of news articles to limit the results to'
   /news/twitter-sources:
     get:
       summary: Your GET endpoint
-      tags: []
+      tags:
+        - partner
       responses:
         '200':
           description: OK
@@ -896,21 +955,26 @@ paths:
                   id:
                     type: string
                     example: '1'
+                    description: id of the twitter source
                   name:
                     type: string
                     example: Binance
+                    description: name of the twitter source
                   username:
                     type: string
                     example: '@binance'
+                    description: username for the twitter source
                   bio:
                     type: string
                     example: The number one exchange by volume
+                    description: bio of the twitter source
                   region:
                     type: string
                     example: en
+                    description: region for the source
                   active:
                     type: boolean
-                    example: 'true'
+                    description: status of the source
               examples:
                 example:
                   value:
@@ -928,6 +992,12 @@ paths:
                       active: true
       operationId: get-news-twitter-sources
       description: Return a list of sources used to receive tweets
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: region
+          description: 'Optional: Limit results to twitter sources in the specified regions'
   /events:
     get:
       summary: Your GET endpoint
