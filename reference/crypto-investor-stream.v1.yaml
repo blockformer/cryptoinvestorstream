@@ -733,18 +733,29 @@ paths:
                       id:
                         type: string
                         description: id of the source
+                        example: '2'
                       username:
                         type: string
                         description: username of the source
+                        example: '@binance'
                       bio:
                         type: string
                         description: bio of the source
+                        example: The number one exchange
                       region:
                         type: string
                         description: region for the source
+                        enum:
+                          - en
+                          - de
+                          - es
+                          - pt
+                          - nl
+                        example: en
                       name:
                         type: string
                         description: name of the source
+                        example: Binance
                   categories:
                     type: array
                     description: Array of categories the tweet content relates to
@@ -754,9 +765,11 @@ paths:
                         id:
                           type: string
                           description: id of the category
+                          example: '4'
                         name:
                           type: string
                           description: name of the category
+                          example: analysis
                   currencies:
                     type: array
                     description: Currencies which are mentianed in the tweet
@@ -766,12 +779,15 @@ paths:
                         id:
                           type: string
                           description: id of the currency
+                          example: '1'
                         name:
                           type: string
                           description: name of the currency
+                          example: Bitcoin
                         symbol:
                           type: string
                           description: symbol of the currency
+                          example: BTC
                   tags:
                     type: array
                     description: aray of tags which are related to the tweet content
@@ -912,6 +928,31 @@ paths:
                       active: true
       operationId: get-news-twitter-sources
       description: Return a list of sources used to receive tweets
+  /events:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: get-events
+      description: List of upcoming and previous events
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: date
+          description: 'Optional: data to show events for'
+        - schema:
+            type: string
+          in: query
+          name: ids
+          description: 'Optional: List of currency ids to show events for'
 components:
   schemas: {}
   securitySchemes:
