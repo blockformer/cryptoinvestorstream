@@ -16,7 +16,7 @@ servers:
 paths:
   /currencies:
     get:
-      summary: Your GET endpoint
+      summary: /currencies
       tags:
         - partner
       responses:
@@ -100,7 +100,7 @@ paths:
           description: 'Optional: The amount of results to return'
   /currencies/metadata:
     get:
-      summary: Your GET endpoint
+      summary: /currencies/metadata
       tags: []
       responses:
         '200':
@@ -231,7 +231,7 @@ paths:
     parameters: []
   /currencies/ticker:
     get:
-      summary: Your GET endpoint
+      summary: /currencies/ticket
       tags: []
       responses:
         '200':
