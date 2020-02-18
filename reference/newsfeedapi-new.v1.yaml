@@ -354,6 +354,32 @@ paths:
                         volume_30d_change_pct:
                           type: string
                           description: 30 day volume change percentile
+                  id:
+                    type: string
+              examples:
+                example:
+                  value:
+                    - id: '2'
+                      name: Binance
+                      description: 'Binance is a global cryptocurrency exchange that provides a platform for trading more than 100 cryptocurrencies. Since early 2018, Binance is considered as the biggest cryptocurrency exchange in the world in terms of trading volume'
+                      region: eu
+                      country: Malta
+                      blog: 'http://binance.com/blog'
+                      twitter: 'http://twitter.com/binance'
+                      telegram: 'https://t.me/binanceexchange'
+                      fees: 'https://www.binance.com/en/fee/schedule'
+                      website: 'https://www.binance.com'
+                      volume:
+                        volume_24h: '236797947.38'
+                        volume_7d: '4334436797947.38'
+                        volume_30d: '34343433797947.38'
+                        volume_24h_change_pct: '1.5563'
+                        volume_7d_change_pct: '2.3343'
+                        volume_30d_change_pct: '3.2333'
+            application/xml:
+              schema:
+                type: object
+                properties: {}
       operationId: get-exchanges
       description: Get a list of supported exchanges
   /market:
@@ -409,6 +435,25 @@ paths:
                       last_update:
                         type: string
                         description: Time of the last update of the fear and greed value
+              examples:
+                example:
+                  value:
+                    btc_dominace: ''
+                    eth_dominance: ''
+                    fear-and-greed-index:
+                      value: '987'
+                      value_classification: A
+                      timestamp: '2019-12-16T18:47:00.000Z'
+                    last_update: '2019-05-16T18:47:00.000Z'
+                    quote:
+                      USD:
+                        total_market_cap: 250385096532.124
+                        total_volume_24h: 119270642406.968
+                        total_volume_24h_reported: 1514905418.39087
+                        altcoin_volume_24h: 119270642406.968
+                        altcoin_volume_24h_reported: 1514905418.39087
+                        altcoin_market_cap: 250385096532.124
+                        last_updated: '2019-05-16T18:47:00.000Z'
       operationId: get-market
       description: 'Returns the latest global cryptocurrency market metrics. Use the "convert" query paramter  to return market values in multiple fiat and cryptocurrency conversions in the same call.'
       parameters:
@@ -680,15 +725,118 @@ paths:
             application/json:
               schema:
                 type: object
-                properties: {}
+                properties:
+                  source:
+                    type: object
+                    description: Source of the tweet
+                    properties:
+                      id:
+                        type: string
+                        description: id of the source
+                      username:
+                        type: string
+                        description: username of the source
+                      bio:
+                        type: string
+                        description: bio of the source
+                      region:
+                        type: string
+                        description: region for the source
+                      name:
+                        type: string
+                        description: name of the source
+                  categories:
+                    type: array
+                    description: Array of categories the tweet content relates to
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: id of the category
+                        name:
+                          type: string
+                          description: name of the category
+                  currencies:
+                    type: array
+                    description: Currencies which are mentianed in the tweet
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: id of the currency
+                        name:
+                          type: string
+                          description: name of the currency
+                        symbol:
+                          type: string
+                          description: symbol of the currency
+                  tags:
+                    type: array
+                    description: aray of tags which are related to the tweet content
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: id of the tag
+                        name:
+                          type: string
+                          description: name of the tag
+                  message:
+                    type: string
+                    description: message content of the twitter message
+                  message_id:
+                    type: string
+                    description: message_id of the twitter message
+                  publish_date:
+                    type: string
+                    format: date-time
+                    description: publish date of the twitter message in RFC3999
+                  sentiment:
+                    type: string
+                    description: sentiment of the twitter message
+                    enum:
+                      - POSITIVE
+                      - NEUTRAL
+                      - NEGATIVE
+                  retweet_count:
+                    type: string
+                    description: number of retweets for the tweet
+                  favorite_count:
+                    type: string
+                    description: favorite count for the tweet
+                  expert_level:
+                    type: string
+                    description: the expert level of the audience this tweet is suitable for.
+                    enum:
+                      - PRO
+                      - INTERMEDIATE
+                      - BEGINNER
+                  exchanges:
+                    type: array
+                    description: exchanges mentioned in the tweet
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: id of the exchange
+                        name:
+                          type: string
+                          description: name of the exchange
               examples:
                 example:
                   value:
                     id: ''
                     source:
-                      id: ''
-                      name: ''
-                    projects:
+                      id: '2'
+                      name: Binance
+                      username: '@binance'
+                      bio: The number one exchange
+                      region: en
+                    currencies:
                       - id: '2'
                         symbol: ETH
                         name: Ethereum
@@ -721,8 +869,49 @@ paths:
     get:
       summary: Your GET endpoint
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: '1'
+                  name:
+                    type: string
+                    example: Binance
+                  username:
+                    type: string
+                    example: '@binance'
+                  bio:
+                    type: string
+                    example: The number one exchange by volume
+                  region:
+                    type: string
+                    example: en
+                  active:
+                    type: boolean
+                    example: 'true'
+              examples:
+                example:
+                  value:
+                    - id: '1'
+                      name: Binance
+                      username: '@binance'
+                      bio: The number one exchange
+                      region: en
+                      active: true
+                    - id: '2'
+                      name: Coinbase
+                      username: '@coinbase'
+                      bio: One of the most used entry level exchange
+                      region: en
+                      active: true
       operationId: get-news-twitter-sources
+      description: Return a list of sources used to receive tweets
 components:
   schemas: {}
   securitySchemes:
