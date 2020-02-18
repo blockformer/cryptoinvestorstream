@@ -462,6 +462,30 @@ paths:
                 properties: {}
       operationId: get-exchanges
       description: Get a list of supported exchanges
+      parameters:
+        - schema:
+            type: string
+            default: id
+          in: query
+          name: sort
+          description: 'Optional: the value to sort the results on, valid option are: id, rank, name'
+        - schema:
+            type: string
+          in: query
+          name: start
+          description: Optionally offset the start (1-based index) of the paginated list of items to return.
+        - schema:
+            type: string
+            default: '25'
+          in: query
+          name: limit
+          description: 'Optional: The amount of results to return'
+        - schema:
+            type: string
+            default: 'id,name,country,active,region,last_update,blog,website,twitter,telegram,fees,rank,volume'
+          in: query
+          name: aux
+          description: Optionally specify a comma-separated list of supplemental data fields to return.
   /market:
     get:
       summary: Your GET endpoint
@@ -729,6 +753,10 @@ paths:
                     type: string
                     description: URL of the source website
                     example: 'https://newsbtc.com'
+                  region:
+                    type: string
+                    example: en
+                    description: The region/language a source is in
               examples:
                 example:
                   value:
@@ -1028,11 +1056,25 @@ paths:
                     description: bio of the twitter source
                   region:
                     type: string
-                    example: en
                     description: region for the source
+                    enum:
+                      - en
+                      - de
+                      - fr
+                      - es
+                      - pt
+                      - nl
+                    example: en
                   active:
                     type: boolean
                     description: status of the source
+                  type:
+                    type: string
+                    description: 'The type of source. '
+                    enum:
+                      - currency
+                      - exchange
+                      - influencer
               examples:
                 example:
                   value:
@@ -1056,6 +1098,12 @@ paths:
           in: query
           name: region
           description: 'Optional: Limit results to twitter sources in the specified regions'
+        - schema:
+            type: string
+            default: all
+          in: query
+          name: source_type
+          description: A comme seperated list of the source_types to return
   /events:
     get:
       summary: Your GET endpoint
@@ -1067,7 +1115,119 @@ paths:
             application/json:
               schema:
                 type: object
-                properties: {}
+                properties:
+                  id:
+                    type: string
+                    description: Event id
+                  title:
+                    type: string
+                    description: Title of this event
+                  currencies:
+                    type: array
+                    description: List of currencies associated with this event
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: id of the currency
+                        symbol:
+                          type: string
+                          description: symbol of the currency
+                  date_event:
+                    type: string
+                    description: Date of this event
+                  can_ocur_before:
+                    type: boolean
+                    description: Indicates whether this event can occur before its date
+                  categories:
+                    type: array
+                    description: Array of categorie Object associated with this event
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: id of the category
+                        name:
+                          type: string
+                          description: Name of the category
+                  proof:
+                    type: string
+                    description: Screenshot proof for this event
+                  description:
+                    type: string
+                  percentage:
+                    type: string
+                    description: Indicates whether an event is legitimate or not (algorithm based on votes and status)
+                  vote_count:
+                    type: string
+                    description: Total number of votes for this event
+                  positive_vote_count:
+                    type: string
+                    description: Number of positive votes for this event
+                  is_hot:
+                    type: boolean
+                    description: Indicates whether an event is hot or not
+                  is_trending:
+                    type: boolean
+                    description: Indicates whether an event is trending or not
+                  is_significant:
+                    type: boolean
+                    description: Indicates whether an event is significant or not
+                  is_controversial:
+                    type: boolean
+                    description: Indicates whether an event is controversial or not
+                  hot_index:
+                    type: string
+                    description: Underlying data to determine whether an event is hot or not (algorithm based on votes and views)
+                  trending_index:
+                    type: string
+                    description: Underlying data to determine whether an event is trending or not (algorithm based on votes and views)
+                  significant_index:
+                    type: string
+                    description: 'Underlying data to determine whether an event is significant or not (algorithm based on votes, views and market cap)'
+                  controversial_index:
+                    type: string
+                    description: Underlying data to determine whether an event is controversial or not (algorithm based on votes and views)
+                  confirmed_by_officials:
+                    type: boolean
+                    description: Indicates whether an event has been confirmed by official representatives or not
+                  original_source:
+                    type: string
+                    description: Link to the original source of the event
+              examples:
+                example:
+                  value:
+                    - id: '223'
+                      title: Blockchain Economy 2020
+                      currencies:
+                        - id: '1'
+                          symbol: BTC
+                        - id: '2'
+                          symbol: ETH
+                      date_event: '2020-02-20'
+                      can_ocur_before: false
+                      categories:
+                        - id: '2'
+                          name: Conference
+                        - id: '4'
+                          name: Community
+                      proof: 'https://d32bfp67k1q0s7.cloudfront.net/25864f9dd39985585787be305ec4f873.png'
+                      description: ''
+                      percentage: '96.92'
+                      vote_count: '1000'
+                      positive_vote_count: '998'
+                      is_hot: 'true'
+                      is_trending: 'false'
+                      is_significant: 'true'
+                      is_controversial: 'true'
+                      hot_index: '198977'
+                      trending_index: '12'
+                      significant_index: '345'
+                      controversial_index: '10'
+                      confirmed_by_officials: 'true'
+                      original_source: 'https://awesomeurl.com'
       operationId: get-events
       description: List of upcoming and previous events
       parameters:
@@ -1081,6 +1241,60 @@ paths:
           in: query
           name: ids
           description: 'Optional: List of currency ids to show events for'
+  /events/categories:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: id of the event category
+                  name:
+                    type: string
+                    description: name of the event category
+              examples:
+                example:
+                  value:
+                    - id: '1'
+                      name: Release
+                    - id: '2'
+                      name: Burn
+      operationId: get-events-categories
+      description: Returns a list of event categories
+  /currency/verticals:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: id of the vertical
+                  name:
+                    type: string
+                    description: name of the vertical
+              examples:
+                example:
+                  value:
+                    - id: '2'
+                      name: Healthcare
+                    - id: '3'
+                      name: DeFi
+      operationId: get-currency-verticals
+      description: 'Returns a list of verticals a currency can belong to. '
 components:
   schemas: {}
   securitySchemes:
