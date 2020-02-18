@@ -41,15 +41,24 @@ paths:
                     example: BTC
                   active:
                     type: boolean
+                    description: The status of the currency
+                  rank:
+                    type: string
+                    description: the rank of the currency based on volume
+                    example: '1'
               examples:
                 example:
                   value:
                     - id: 1
                       name: Bitcoin
                       symbol: BTC
+                      active: '1'
+                      rank: '1'
                     - id: 3
                       name: Ethereum
                       symbol: ETH
+                      active: '1'
+                      rank: '2'
       operationId: get-currencies
       description: "Returns a list of all supported currencies. Always use the id's gathered here to lookup data for specific currencies. "
       parameters:
@@ -60,8 +69,35 @@ paths:
           description: 'Optional: Limit the results to currencies in the provided verticals'
         - schema:
             type: string
+            default: active
+            enum:
+              - active
+              - inactive
+              - all
           in: query
           name: listing_status
+          description: 'Optional: By default only active projects are listed. To list non active currencies set the listing_status=all'
+        - schema:
+            type: string
+            enum:
+              - id
+              - rank
+            default: id
+          in: query
+          name: sort
+          description: 'Optional: the value to sort the results on, valid option are: id and rank'
+        - schema:
+            type: string
+            default: '1'
+          in: query
+          name: start
+          description: Optionally offset the start (1-based index) of the paginated list of items to return.
+        - schema:
+            type: string
+            default: '100'
+          in: query
+          name: limit
+          description: 'Optional: The amount of results to return'
   /currencies/metadata:
     get:
       summary: Your GET endpoint
@@ -149,6 +185,10 @@ paths:
                     type: string
                     description: The symbol of the currency
                     example: BTC
+                  rankl:
+                    type: string
+                    description: 'The rank of the currency '
+                    example: '1'
               examples:
                 example:
                   value:
@@ -182,6 +222,12 @@ paths:
           name: ids
           description: The id or ids of the currencies you want the metadata for
           required: true
+        - schema:
+            type: string
+            default: 'name,bio_short,bio_long,logo_url,hq_location,vertical,links,communities,symbol,rank'
+          in: query
+          name: aux
+          description: Optionally specify a comma-separated list of supplemental data fields to return.
     parameters: []
   /currencies/ticker:
     get:
@@ -276,14 +322,14 @@ paths:
               examples:
                 example:
                   value:
-                    id: BTC
+                    id: '1'
                     price: '8451.36516421'
                     price_date: '2019-06-14'
                     symbol: BTC
                     circulating_supply: '17758462'
                     max_supply: '21000000'
                     name: Bitcoin
-                    logo_url: 'https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/btc.svg'
+                    logo_url: 'https://s3.us-east-2.amazonaws.com/cis/static/images/currencies/btc.svg'
                     market_cap: '150083247116.70'
                     rank: '1'
                     high: '19404.81116899'
@@ -307,6 +353,18 @@ paths:
             type: string
           in: query
           name: convert
+        - schema:
+            type: string
+            default: 'id,symbol,price,price_date,circulating_supply,max_supply,logo_url,market_cap,rank,ath,ath_date,timeframe=1h,quote_currency=USD'
+          in: query
+          name: aux
+          description: Optionally specify a comma-separated list of data fields to return.
+        - schema:
+            type: string
+            default: 1h
+          in: query
+          name: timeframe
+          description: 'Enter a comma seperated list of time frames. Valid values are: 5m, 15m, 30m, 1h, 2h, 4h, 1d, 7d, 30d'
       description: 'Price, volume, market cap, and rank for all currencies across 5 minute, 15 minute, 30minute, 1 hour, 1 day, 7 day, 30 day, 365 day, and year to date intervals. Current prices are updated every minute'
   /exchanges:
     get:
