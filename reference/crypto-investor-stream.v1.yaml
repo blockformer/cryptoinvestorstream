@@ -6,7 +6,7 @@ info:
     name: Crypto Investor Stream Api Team
     url: 'http://cryptonvestor.stream/api'
     email: api@cryptoinvestor.stream
-  description: "#Introdunction\\n\\nAPI for fetching cryptocurrency price, market and news data"
+  description: "#Introduction\\n\\nAPI for fetching cryptocurrency price, market and news data"
   termsOfService: 'https://cryptoinvestor.stream/terms'
   license:
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
