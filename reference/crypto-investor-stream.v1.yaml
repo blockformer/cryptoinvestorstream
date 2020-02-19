@@ -370,7 +370,7 @@ paths:
       description: 'Price, volume, market cap, and rank for all currencies across 5 minute, 15 minute, 30minute, 1 hour, 1 day, 7 day, 30 day, 365 day, and year to date intervals. Current prices are updated every minute'
   /exchanges:
     get:
-      summary: Your GET endpoint
+      summary: exchanges
       responses:
         '200':
           description: A list of supported exchanges and the metadata information
@@ -491,7 +491,7 @@ paths:
         - Exchanges
   /market:
     get:
-      summary: Your GET endpoint
+      summary: /market
       tags:
         - Market
       responses:
@@ -572,7 +572,7 @@ paths:
           description: he currency to convert the default USD values to. Must be a Fiat currency. Use the /conversion-rates endpoint to check which currencies are available
   /news:
     get:
-      summary: Your GET endpoint
+      summary: /news
       tags:
         - News
       responses:
@@ -736,7 +736,7 @@ paths:
     parameters: []
   /news/sources:
     get:
-      summary: Your GET endpoint
+      summary: /news/sources
       tags:
         - News
       responses:
@@ -783,7 +783,7 @@ paths:
           description: 'Optional: Limit results to sources from the specified regions'
   /news/categories:
     get:
-      summary: Your GET endpoint
+      summary: /news/categories
       tags:
         - News
       responses:
@@ -815,7 +815,7 @@ paths:
       description: Returns a list of available categories
   /news/tags:
     get:
-      summary: Your GET endpoint
+      summary: /news/tags
       tags:
         - News
       responses:
@@ -845,7 +845,7 @@ paths:
       description: Returns a list of tags which are used
   /news/twitter:
     get:
-      summary: Your GET endpoint
+      summary: /news/twitter
       tags:
         - News
       responses:
@@ -1036,7 +1036,7 @@ paths:
           description: 'Optional: Amount of news articles to limit the results to'
   /news/twitter-sources:
     get:
-      summary: Your GET endpoint
+      summary: /news/twitter-sources
       tags:
         - News
       responses:
@@ -1115,7 +1115,7 @@ paths:
           description: A comme seperated list of the source_types to return
   /events:
     get:
-      summary: Your GET endpoint
+      summary: /events
       tags:
         - Events
       responses:
@@ -1253,7 +1253,7 @@ paths:
           description: 'Optional: List of currency ids to show events for'
   /events/categories:
     get:
-      summary: Your GET endpoint
+      summary: /events/categories
       tags:
         - Events
       responses:
@@ -1281,7 +1281,7 @@ paths:
       description: Returns a list of event categories
   /currency/verticals:
     get:
-      summary: Your GET endpoint
+      summary: /currency/verticals
       tags:
         - Currencies
       responses:
