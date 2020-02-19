@@ -6,7 +6,7 @@ info:
     name: Crypto Investor Stream Api Team
     url: 'http://cryptonvestor.stream/api'
     email: api@cryptoinvestor.stream
-  description: 'API for fetching cryptocurrency price, market and news data'
+  description: "#Introdunction\\n\\nAPI for fetching cryptocurrency price, market and news data"
   termsOfService: 'https://cryptoinvestor.stream/terms'
   license:
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
@@ -1318,3 +1318,14 @@ components:
       name: X-API-KEY
       type: apiKey
       in: query
+tags:
+  - name: Currencies
+    description: Endpoints related to getting currency price and metadata
+  - name: Exchanges
+    description: Endpoints which provide information about exchanges
+  - name: Events
+    description: Endpoints related to event information. Get the latest events related to crypto currencies
+  - name: Market
+    description: 'General market information like global marketcap, fear and greed index.'
+  - name: News
+    description: Endpoints that return the latest curated news and social information about the market
