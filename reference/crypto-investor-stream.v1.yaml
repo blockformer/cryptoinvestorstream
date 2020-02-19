@@ -101,7 +101,8 @@ paths:
   /currencies/metadata:
     get:
       summary: /currencies/metadata
-      tags: Currencies
+      tags:
+        - Currencies
       responses:
         '200':
           description: OK
@@ -231,8 +232,9 @@ paths:
     parameters: []
   /currencies/ticker:
     get:
-      summary: /currencies/ticket
-      tags: Currencies
+      summary: /currencies/ticker
+      tags:
+        - Currencies
       responses:
         '200':
           description: OK
@@ -369,7 +371,6 @@ paths:
   /exchanges:
     get:
       summary: Your GET endpoint
-      tags: Exchanges
       responses:
         '200':
           description: A list of supported exchanges and the metadata information
@@ -486,10 +487,13 @@ paths:
           in: query
           name: aux
           description: Optionally specify a comma-separated list of supplemental data fields to return.
+      tags:
+        - Exchanges
   /market:
     get:
       summary: Your GET endpoint
-      tags: Market
+      tags:
+        - Market
       responses:
         '200':
           description: OK
@@ -569,7 +573,8 @@ paths:
   /news:
     get:
       summary: Your GET endpoint
-      tags: News
+      tags:
+        - News
       responses:
         '200':
           description: OK
@@ -732,7 +737,8 @@ paths:
   /news/sources:
     get:
       summary: Your GET endpoint
-      tags: News
+      tags:
+        - News
       responses:
         '200':
           description: OK
@@ -778,7 +784,8 @@ paths:
   /news/categories:
     get:
       summary: Your GET endpoint
-      tags: News
+      tags:
+        - News
       responses:
         '200':
           description: OK
@@ -809,7 +816,8 @@ paths:
   /news/tags:
     get:
       summary: Your GET endpoint
-      tags: News
+      tags:
+        - News
       responses:
         '200':
           description: OK
@@ -838,7 +846,8 @@ paths:
   /news/twitter:
     get:
       summary: Your GET endpoint
-      tags: News
+      tags:
+        - News
       responses:
         '200':
           description: OK
@@ -1107,7 +1116,8 @@ paths:
   /events:
     get:
       summary: Your GET endpoint
-      tags: Events
+      tags:
+        - Events
       responses:
         '200':
           description: OK
@@ -1244,7 +1254,8 @@ paths:
   /events/categories:
     get:
       summary: Your GET endpoint
-      tags: Events
+      tags:
+        - Events
       responses:
         '200':
           description: OK
@@ -1271,7 +1282,8 @@ paths:
   /currency/verticals:
     get:
       summary: Your GET endpoint
-      tags: Currencies
+      tags:
+        - Currencies
       responses:
         '200':
           description: OK
