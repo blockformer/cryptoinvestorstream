@@ -190,6 +190,10 @@ paths:
                     type: string
                     description: 'The rank of the currency '
                     example: '1'
+                  platform_symbol:
+                    type: string
+                  platform_token_address:
+                    type: string
               examples:
                 example:
                   value:
