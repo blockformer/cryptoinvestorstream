@@ -552,9 +552,7 @@ paths:
                       USD:
                         total_market_cap: 250385096532.124
                         total_volume_24h: 119270642406.968
-                        total_volume_24h_reported: 1514905418.39087
                         altcoin_volume_24h: 119270642406.968
-                        altcoin_volume_24h_reported: 1514905418.39087
                         altcoin_market_cap: 250385096532.124
                         last_updated: '2019-05-16T18:47:00.000Z'
       operationId: get-market
@@ -1308,7 +1306,8 @@ paths:
   /currencies/exchange-rates:
     get:
       summary: Your GET endpoint
-      tags: []
+      tags:
+        - Currencies
       responses:
         '200':
           description: OK
