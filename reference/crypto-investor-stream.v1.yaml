@@ -1305,7 +1305,7 @@ paths:
       description: 'Returns a list of verticals a currency can belong to. '
   /currencies/exchange-rates:
     get:
-      summary: Your GET endpoint
+      summary: /currencies/exchange-rates
       tags:
         - Currencies
       responses:
@@ -1322,7 +1322,7 @@ paths:
                   rate:
                     type: string
       operationId: get-currencies-exchange-rate
-      description: A list of the exchange rates used to convert currency prices
+      description: A list of the available exchange rates used to convert currency prices
     parameters: []
 components:
   schemas: {}
