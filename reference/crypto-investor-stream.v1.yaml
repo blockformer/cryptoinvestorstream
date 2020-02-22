@@ -1311,6 +1311,32 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  currency:
+                    type: string
+                    description: Currency ISO code
+                  rate:
+                    type: string
+                    description: Rate at which to convert from USD
+                  last_update:
+                    type: string
+                    description: last time the rate was updated
+              examples:
+                example:
+                  value:
+                    - currency: AED
+                      rate: 0.27224
+                      last_update: '2020-02-21T19:47:24.554601+01:00'
+                    - currency: AFN
+                      rate: 0.01296
+                      last_update: '2020-02-21T19:47:24.557480+01:00'
+                    - currency: ALL
+                      rate: 0.00883
+                      last_update: '2020-02-21T19:47:24.560105+01:00'
         '':
           content:
             application/json:
@@ -1323,6 +1349,12 @@ paths:
                     type: string
       operationId: get-currencies-exchange-rate
       description: A list of the available exchange rates used to convert currency prices
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: currencies
+          description: List of currencies to return the exchange rate for
     parameters: []
 components:
   schemas: {}
