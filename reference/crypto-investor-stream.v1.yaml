@@ -418,28 +418,20 @@ paths:
                     description: Rank of the exchange based on adjusted volume
                   volume:
                     type: array
-                    items:
-                      type: object
-                      properties:
-                        volume_24h:
-                          type: string
-                          description: 24 hour volume information for the exchange
-                        volume_7d:
-                          type: string
-                          description: 7 day volume information for the exchange
-                        volume_30d:
-                          type: string
-                          description: 30 day volume information for the exchange
-                        volume_24h_change_pct:
-                          type: string
-                          description: 24 hour volume change percentile
-                        volume_7d_change_pct:
-                          type: string
-                          description: 7 day volume change percentile
-                        volume_30d_change_pct:
-                          type: string
-                          description: 30 day volume change percentile
+                    items: {}
                   id:
+                    type: string
+                  volume_24h:
+                    type: string
+                  volume_7d:
+                    type: string
+                  volume_30d:
+                    type: string
+                  volume_24h_change_pct:
+                    type: string
+                  volume_7d_change_pct:
+                    type: string
+                  volume_30d_change_pct:
                     type: string
               examples:
                 example:
@@ -454,13 +446,12 @@ paths:
                       telegram: 'https://t.me/binanceexchange'
                       fees: 'https://www.binance.com/en/fee/schedule'
                       website: 'https://www.binance.com'
-                      volume:
-                        volume_24h: '236797947.38'
-                        volume_7d: '4334436797947.38'
-                        volume_30d: '34343433797947.38'
-                        volume_24h_change_pct: '1.5563'
-                        volume_7d_change_pct: '2.3343'
-                        volume_30d_change_pct: '3.2333'
+                      volume_24h: '236797947.38'
+                      volume_7d: '4334436797947.38'
+                      volume_30d: '34343433797947.38'
+                      volume_24h_change_pct: '1.5563'
+                      volume_7d_change_pct: '2.3343'
+                      volume_30d_change_pct: '3.2333'
             application/xml:
               schema:
                 type: object
@@ -1302,6 +1293,9 @@ paths:
                   name:
                     type: string
                     description: name of the vertical
+                  description:
+                    type: string
+                    description: description of the vertical
               examples:
                 example:
                   value:
@@ -1311,6 +1305,26 @@ paths:
                       name: DeFi
       operationId: get-currency-verticals
       description: 'Returns a list of verticals a currency can belong to. '
+  /currencies/exchange-rates:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+        '':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  currency:
+                    type: string
+                  rate:
+                    type: string
+      operationId: get-currencies-exchange-rate
+      description: A list of the exchange rates used to convert currency prices
+    parameters: []
 components:
   schemas: {}
   securitySchemes:
