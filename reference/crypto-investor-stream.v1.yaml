@@ -416,49 +416,47 @@ paths:
                   rank:
                     type: string
                     description: Rank of the exchange based on adjusted volume
-                  volume:
-                    type: array
-                    items: {}
                   id:
                     type: string
-                  volume_24h:
-                    type: string
-                  volume_7d:
-                    type: string
-                  volume_30d:
-                    type: string
-                  volume_24h_change_pct:
-                    type: string
-                  volume_7d_change_pct:
-                    type: string
-                  volume_30d_change_pct:
-                    type: string
-                  rating:
+                  grades:
                     type: object
                     properties:
+                      legal:
+                        type: string
+                      investment:
+                        type: string
+                      team:
+                        type: string
+                      data_provision:
+                        type: string
+                      trade_monitoring:
+                        type: string
+                      market_quality:
+                        type: string
+                      security:
+                        type: string
+                      negative_reports_penalty:
+                        type: string
                       grade:
                         type: string
                       grade_points:
                         type: string
-                      grade_points_sections:
-                        type: object
-                        properties:
-                          legal:
-                            type: string
-                          investment:
-                            type: string
-                          team:
-                            type: string
-                          data_provision:
-                            type: string
-                          trade_monitoring:
-                            type: string
-                          market_quality:
-                            type: string
-                          security:
-                            type: string
-                          negative_reports_penalty:
-                            type: string
+
+                  volume:
+                    type: object
+                    properties:
+                      volume_24h:
+                        type: string
+                      volume_7d:
+                        type: string
+                      volume_30d:
+                        type: string
+                      volume_24h_change_percent:
+                        type: string
+                      volume_7d_change_percent:
+                        type: string
+                      volume_30d_change_percent:
+                        type: string
               examples:
                 example:
                   value:
@@ -535,22 +533,10 @@ paths:
               schema:
                 type: object
                 properties:
-                  btc-dominace:
-                    type: string
-                    description: "Bitcoin's market dominance percentage by market cap."
-                  btc_dominance_2h_change_percent:
-                    type: string
-                    description: 24h change percentage in the BTC dominance
-                  eth-dominance:
-                    type: string
-                    description: "Ethereum's market dominance percentage by market cap."
-                  eth_dominance_2h_change_percent:
-                    type: string
-                    description: 24h change percentage in the ETH dominance     
                   quote:
                     type: object
-                    properties:               
-                       quote_currency:
+                    properties:
+                      quote_currency:
                         type: object
                         description: Market information in converted currency default is USD
                         properties:
@@ -568,7 +554,10 @@ paths:
                             description: Total altcoin marketcap
                           last_update:
                             type: string
-                            description: Time of the last update     
+                            description: Time of the last update
+                  eth-dominance:
+                    type: string
+                    description: "Ethereum's market dominance percentage by market cap."
                   fear-and-greed:
                     type: object
                     description: Fear and greed index values
@@ -585,8 +574,15 @@ paths:
                       24h_change_percent:
                         type: string
                         description: Percentage change in the last 24 hours in the fear and greed index
-
-
+                  eth_dominance_24h_change_percent:
+                    type: string
+                    description: 24h change percentage in the ETH dominance
+                  btc_dominance_24h_change_percent:
+                    type: string
+                    description: 24h change percentage in the BTC dominance
+                  btc-dominace:
+                    type: string
+                    description: "Bitcoin's market dominance percentage by market cap."
               examples:
                 example:
                   value:
@@ -632,9 +628,6 @@ paths:
                     type: object
                     description: Information about the source of the news article
                     properties:
-                      id:
-                        type: string
-                        description: id of the source. Get all ids from /news/sources
                       name:
                         type: string
                         description: Name of the news source
@@ -663,12 +656,12 @@ paths:
                     items:
                       type: object
                       properties:
-                        id:
-                          type: string
-                          description: Category id
                         name:
                           type: string
                           description: Name of the category
+                        keywords:
+                          type: string
+                          description: keywords which describe the category
                   tags:
                     type: array
                     description: Tags related to the news article
@@ -1129,6 +1122,9 @@ paths:
                       - currency
                       - exchange
                       - influencer
+                  twitter_id:
+                    type: string
+                    description: twitter id needed to generate urls
               examples:
                 example:
                   value:
