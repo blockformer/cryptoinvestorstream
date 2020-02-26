@@ -535,10 +535,22 @@ paths:
               schema:
                 type: object
                 properties:
+                  btc-dominace:
+                    type: string
+                    description: "Bitcoin's market dominance percentage by market cap."
+                  btc_dominance_2h_change_percent:
+                    type: string
+                    description: 24h change percentage in the BTC dominance
+                  eth-dominance:
+                    type: string
+                    description: "Ethereum's market dominance percentage by market cap."
+                  eth_dominance_2h_change_percent:
+                    type: string
+                    description: 24h change percentage in the ETH dominance     
                   quote:
                     type: object
-                    properties:
-                      quote_currency:
+                    properties:               
+                       quote_currency:
                         type: object
                         description: Market information in converted currency default is USD
                         properties:
@@ -556,13 +568,7 @@ paths:
                             description: Total altcoin marketcap
                           last_update:
                             type: string
-                            description: Time of the last update
-                  eth-dominance:
-                    type: string
-                    description: "Ethereum's market dominance percentage by market cap."
-                  btc-dominace:
-                    type: string
-                    description: "Bitcoin's market dominance percentage by market cap."
+                            description: Time of the last update     
                   fear-and-greed:
                     type: object
                     description: Fear and greed index values
@@ -576,15 +582,23 @@ paths:
                       last_update:
                         type: string
                         description: Time of the last update of the fear and greed value
+                      24h_change_percent:
+                        type: string
+                        description: Percentage change in the last 24 hours in the fear and greed index
+
+
               examples:
                 example:
                   value:
-                    btc_dominace: ''
-                    eth_dominance: ''
+                    btc_dominace: '69.23'
+                    btc_dominance_24h_change_percent: '1.75'
+                    eth_dominance: '10.23'
+                    eth_dominance_24h_change_percent: '-2.25'
                     fear-and-greed-index:
                       value: '987'
                       value_classification: A
                       timestamp: '2019-12-16T18:47:00.000Z'
+                      24h_change_percent: '2.3'
                     last_update: '2019-05-16T18:47:00.000Z'
                     quote:
                       USD:
