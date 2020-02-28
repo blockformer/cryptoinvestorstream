@@ -293,38 +293,37 @@ paths:
                     description: The date on which the ATH was reached
                     format: date
                     example: '2017-12-16'
-                  timeframe:
+                  timeframes:
                     type: object
                     description: 'Timeframe for the data eg. 1h, 24h, 7d, 30d'
                     properties:
-                      price_change:
-                        type: string
-                        description: 'Change in price in USD, use convert to change to a different currency'
-                        example: '269.75208019'
-                      price_change_pct:
-                        type: string
-                        description: Percent change of price for the given timeframe
-                        example: '0.03297053'
-                      volume:
-                        type: string
-                        description: 'Total volume for the given timeframe, default in USD'
-                        example: '1110989572.04'
-                      volume_change_pct:
-                        type: string
-                        description: Percent change of volume for the given timeframe
-                        example: '24130098.49'
-                      market_cap_change:
-                        type: string
-                        description: Amount of market cap change for the given timeframe
-                        example: '4805518049.63'
-                      market_cap_change_pct:
-                        type: string
-                        description: Percent change of market_cap for the given timeframe
-                        example: '0.03'
-                  quote-currency:
-                    type: string
-                    description: Quote currency
-                    example: USD
+                      timeframe:
+                        type: object
+                        description: The timeframe
+                        properties:
+                          currency:
+                            type: object
+                            description: currency or list of currencies for the data
+                            properties:
+                              price_change:
+                                type: array
+                                description: price change
+                                items: {}
+                              price_change_percent:
+                                type: string
+                                description: percent change in price
+                              volume:
+                                type: string
+                                description: volume in specified currency
+                              volume_change:
+                                type: string
+                                description: percent change in volume
+                              markercap_change:
+                                type: string
+                                description: change in marketcap
+                              marketcap_change_percent:
+                                type: string
+                                description: percent change in marketcap
               examples:
                 example:
                   value:
@@ -341,14 +340,41 @@ paths:
                     high: '19404.81116899'
                     high_timestamp: '2017-12-16'
                     quote_cuurency: EUR
-                    1d:
-                      price_change: '269.75208019'
-                      price_change_pct: '0.03297053'
-                      volume: '1110989572.04'
-                      volume_change: '-24130098.49'
-                      volume_change_pct: '-0.02'
-                      market_cap_change: '4805518049.63'
-                      market_cap_change_pct: '0.03'
+                    timeframes:
+                      1d:
+                        USD:
+                          price_change: '269.75208019'
+                          price_change_pct: '0.03297053'
+                          volume: '1110989572.04'
+                          volume_change: '-24130098.49'
+                          volume_change_pct: '-0.02'
+                          market_cap_change: '4805518049.63'
+                          market_cap_change_pct: '0.03'
+                        EUR:
+                          price_change: '269.75208019'
+                          price_change_pct: '0.03297053'
+                          volume: '1110989572.04'
+                          volume_change: '-24130098.49'
+                          volume_change_pct: '-0.02'
+                          market_cap_change: '4805518049.63'
+                          market_cap_change_pct: '0.03'
+                      7d:
+                        USD:
+                          price_change: '269.75208019'
+                          price_change_pct: '0.03297053'
+                          volume: '1110989572.04'
+                          volume_change: '-24130098.49'
+                          volume_change_pct: '-0.02'
+                          market_cap_change: '4805518049.63'
+                          market_cap_change_pct: '0.03'
+                        EUR:
+                          price_change: '269.75208019'
+                          price_change_pct: '0.03297053'
+                          volume: '1110989572.04'
+                          volume_change: '-24130098.49'
+                          volume_change_pct: '-0.02'
+                          market_cap_change: '4805518049.63'
+                          market_cap_change_pct: '0.03'
       operationId: get-currencies-ticker
       parameters:
         - schema:
@@ -441,7 +467,6 @@ paths:
                         type: string
                       grade_points:
                         type: string
-
                   volume:
                     type: object
                     properties:
