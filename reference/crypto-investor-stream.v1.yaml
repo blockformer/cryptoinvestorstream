@@ -327,54 +327,54 @@ paths:
               examples:
                 example:
                   value:
-                    id: '1'
-                    price: '8451.36516421'
-                    price_date: '2019-06-14'
-                    symbol: BTC
-                    circulating_supply: '17758462'
-                    max_supply: '21000000'
-                    name: Bitcoin
-                    logo_url: 'https://s3.us-east-2.amazonaws.com/cis/static/images/currencies/btc.svg'
-                    market_cap: '150083247116.70'
-                    rank: '1'
-                    high: '19404.81116899'
-                    high_timestamp: '2017-12-16'
-                    quote_cuurency: EUR
-                    timeframes:
-                      1d:
-                        USD:
-                          price_change: '269.75208019'
-                          price_change_pct: '0.03297053'
-                          volume: '1110989572.04'
-                          volume_change: '-24130098.49'
-                          volume_change_pct: '-0.02'
-                          market_cap_change: '4805518049.63'
-                          market_cap_change_pct: '0.03'
-                        EUR:
-                          price_change: '269.75208019'
-                          price_change_pct: '0.03297053'
-                          volume: '1110989572.04'
-                          volume_change: '-24130098.49'
-                          volume_change_pct: '-0.02'
-                          market_cap_change: '4805518049.63'
-                          market_cap_change_pct: '0.03'
-                      7d:
-                        USD:
-                          price_change: '269.75208019'
-                          price_change_pct: '0.03297053'
-                          volume: '1110989572.04'
-                          volume_change: '-24130098.49'
-                          volume_change_pct: '-0.02'
-                          market_cap_change: '4805518049.63'
-                          market_cap_change_pct: '0.03'
-                        EUR:
-                          price_change: '269.75208019'
-                          price_change_pct: '0.03297053'
-                          volume: '1110989572.04'
-                          volume_change: '-24130098.49'
-                          volume_change_pct: '-0.02'
-                          market_cap_change: '4805518049.63'
-                          market_cap_change_pct: '0.03'
+                    - id: '1'
+                      price: '8451.36516421'
+                      price_date: '2019-06-14'
+                      symbol: BTC
+                      circulating_supply: '17758462'
+                      max_supply: '21000000'
+                      name: Bitcoin
+                      logo_url: 'https://s3.us-east-2.amazonaws.com/cis/static/images/currencies/btc.svg'
+                      market_cap: '150083247116.70'
+                      rank: '1'
+                      high: '19404.81116899'
+                      high_timestamp: '2017-12-16'
+                      quote_cuurency: EUR
+                      timeframes:
+                        1d:
+                          USD:
+                            price_change: '269.75208019'
+                            price_change_pct: '0.03297053'
+                            volume: '1110989572.04'
+                            volume_change: '-24130098.49'
+                            volume_change_pct: '-0.02'
+                            market_cap_change: '4805518049.63'
+                            market_cap_change_pct: '0.03'
+                          EUR:
+                            price_change: '269.75208019'
+                            price_change_pct: '0.03297053'
+                            volume: '1110989572.04'
+                            volume_change: '-24130098.49'
+                            volume_change_pct: '-0.02'
+                            market_cap_change: '4805518049.63'
+                            market_cap_change_pct: '0.03'
+                        7d:
+                          USD:
+                            price_change: '269.75208019'
+                            price_change_pct: '0.03297053'
+                            volume: '1110989572.04'
+                            volume_change: '-24130098.49'
+                            volume_change_pct: '-0.02'
+                            market_cap_change: '4805518049.63'
+                            market_cap_change_pct: '0.03'
+                          EUR:
+                            price_change: '269.75208019'
+                            price_change_pct: '0.03297053'
+                            volume: '1110989572.04'
+                            volume_change: '-24130098.49'
+                            volume_change_pct: '-0.02'
+                            market_cap_change: '4805518049.63'
+                            market_cap_change_pct: '0.03'
       operationId: get-currencies-ticker
       parameters:
         - schema:
@@ -397,6 +397,11 @@ paths:
           in: query
           name: timeframe
           description: 'Enter a comma seperated list of time frames. Valid values are: 5m, 15m, 30m, 1h, 2h, 4h, 1d, 7d, 30d'
+        - schema:
+            type: string
+          in: query
+          name: symbols
+          description: Comma seperated list of symbols to get the data for.
       description: 'Price, volume, market cap, and rank for all currencies across 5 minute, 15 minute, 30minute, 1 hour, 1 day, 7 day, 30 day, 365 day, and year to date intervals. Current prices are updated every minute'
   /exchanges:
     get:
