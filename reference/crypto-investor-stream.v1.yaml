@@ -381,16 +381,18 @@ paths:
             type: string
           in: query
           name: ids
+          description: 'Optional: a comma seperated list of currency ids to return. '
         - schema:
             type: string
           in: query
           name: convert
+          description: 'Optional: Currency to convert the results in'
         - schema:
             type: string
             default: 'id,symbol,price,price_date,circulating_supply,max_supply,logo_url,market_cap,rank,ath,ath_date,timeframe=1h,quote_currency=USD'
           in: query
           name: aux
-          description: Optionally specify a comma-separated list of data fields to return.
+          description: 'Optional: specify a comma-separated list of data fields to return.'
         - schema:
             type: string
             default: 1h
@@ -401,8 +403,22 @@ paths:
             type: string
           in: query
           name: symbols
-          description: Comma seperated list of symbols to get the data for.
+          description: 'Optional: a comma seperated list of symbols to get the data for.'
+        - schema:
+            type: string
+            default: '100'
+          in: query
+          name: limit
+          description: 'Optional: The amount of results to return'
+        - schema:
+            type: string
+            default: '1'
+          in: query
+          name: start
+          description: 'Optional: offset the start (1-based index) of the paginated list of items to return.'
       description: 'Price, volume, market cap, and rank for all currencies across 5 minute, 15 minute, 30minute, 1 hour, 1 day, 7 day, 30 day, 365 day, and year to date intervals. Current prices are updated every minute'
+      requestBody:
+        description: ''
   /exchanges:
     get:
       summary: exchanges
