@@ -39,6 +39,9 @@ paths:
                     type: string
                     description: currency symbol
                     example: BTC
+                  logo_url:
+                    type: string
+                    description: URL for the logo of the currency
                   active:
                     type: boolean
                     description: The status of the currency
@@ -46,9 +49,6 @@ paths:
                     type: string
                     description: the rank of the currency based on volume
                     example: '1'
-                  logo_url:
-                    type: string
-                    description: URL for the logo of the currency
               examples:
                 example:
                   value:
@@ -171,6 +171,8 @@ paths:
                           type: string
                           description: URL to the link
                           example: 'https://www.bitcoin.com'
+                        '':
+                          type: string
                   communities:
                     type: array
                     description: Communities for the currency
@@ -401,7 +403,7 @@ paths:
             default: 1h
           in: query
           name: timeframe
-          description: 'Enter a comma seperated list of time frames. Valid values are: 5m, 15m, 30m, 1h, 2h, 4h, 1d, 7d, 30d'
+          description: 'Enter a comma seperated list of time frames. Valid values are: 5m, 15m, 30m, 1h, 2h, 4h, 8h, 12h, 1d, 7d, 30d'
         - schema:
             type: string
           in: query
