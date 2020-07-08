@@ -1462,6 +1462,185 @@ paths:
           name: currencies
           description: 'Optional: List of currencies to return the exchange rate for'
     parameters: []
+  /currencies/events:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  time:
+                    type: string
+                    description: time of the event
+                  symbol:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: id of the symbol
+                      symbol:
+                        type: string
+                        description: symbol
+                      logo_url:
+                        type: string
+                        description: Logo URL for the symbol
+                  event:
+                    type: string
+                    description: Event type
+                    enum:
+                      - 24h-high
+                      - 24h-low
+                      - 1h-high
+                      - 1h-low
+                      - 7d-high
+                      - 7d-low
+                      - ATH
+              examples:
+                example:
+                  value:
+                    time: '2020-07-08 15:48'
+                    symbol:
+                      id: '1'
+                      symbol: BTC
+                      logo_url: ''
+                    event: 7d-high
+      operationId: get-market-top-movers
+      description: List of top movers
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: id
+          description: 'Optional: Comma seperated list of ids of currencies to list'
+        - schema:
+            type: string
+          in: query
+          name: symbol
+          description: 'Optional: Comma seperated list of symbols of currencies to list'
+    parameters: []
+  /currencies/top-gainers:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  symbol:
+                    type: string
+                  symbol_name:
+                    type: string
+                  quote:
+                    type: object
+                    properties:
+                      currency:
+                        type: object
+                        properties:
+                          volume:
+                            type: string
+                          price:
+                            type: string
+                  percent_change:
+                    type: string
+              examples:
+                example:
+                  value:
+                    - symbol: BTC
+                      symbol_name: Bitcoin
+                      quote:
+                        USD:
+                          volume: '10093445523.02'
+                          price: '9434.23'
+                      percent_change: '23'
+                    - symbol: BTC
+                      symbol_name: Bitcoin
+                      quote:
+                        USD:
+                          volume: '32333445523.04'
+                          price: '9434.23'
+                      percent_change: '23'
+      operationId: get-currencies-gainers-losers
+      description: Top gainers for a specifed timeframe
+      parameters:
+        - schema:
+            type: string
+            example: ''
+            enum:
+              - 1h
+              - 24h
+              - 7d
+          in: query
+          name: timeframe
+          description: The timeframe for which to show the top gainers
+          required: true
+    parameters: []
+  /currencies/top-losers:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  symbol:
+                    type: string
+                  symbol_name:
+                    type: string
+                  quote:
+                    type: object
+                    properties:
+                      currency:
+                        type: object
+                        properties:
+                          volume:
+                            type: string
+                          price:
+                            type: string
+                  percent_change:
+                    type: string
+              examples:
+                example:
+                  value:
+                    - symbol: BTC
+                      symbol_name: Bitcoin
+                      quote:
+                        USD:
+                          volume: '10093445523.02'
+                          price: '9434.23'
+                      percent_change: '23'
+                    - symbol: BTC
+                      symbol_name: Bitcoin
+                      quote:
+                        USD:
+                          volume: '32333445523.04'
+                          price: '9434.23'
+                      percent_change: '23'
+      operationId: get-currencies-top-losers
+      description: Top losers for a speciefied timeframe
+      parameters:
+        - schema:
+            type: string
+            enum:
+              - 1h
+              - 24h
+              - 7d
+          in: query
+          name: timeframe
+          required: true
+          description: The timeframe for which to show the top losers and gainers
 components:
   schemas: {}
   securitySchemes:
