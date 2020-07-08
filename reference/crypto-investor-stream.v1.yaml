@@ -234,7 +234,7 @@ paths:
         - schema:
             type: string
           in: query
-          name: symbols
+          name: symbol
           description: 'Optional: The symbol or a comma seperated list of symbols of the currencies you want the metadata for'
     parameters: []
   /currencies/ticker:
@@ -383,7 +383,7 @@ paths:
         - schema:
             type: string
           in: query
-          name: ids
+          name: id
           description: 'Optional: a comma seperated list of currency ids to return. '
         - schema:
             type: string
@@ -400,7 +400,7 @@ paths:
         - schema:
             type: string
           in: query
-          name: symbols
+          name: symbol
           description: 'Optional: a comma seperated list of symbols to get the data for.'
         - schema:
             type: string
@@ -648,7 +648,7 @@ paths:
             type: string
           in: query
           name: convert
-          description: he currency to convert the default USD values to. Must be a Fiat currency. Use the /conversion-rates endpoint to check which currencies are available
+          description: The currency to convert the default USD values to. Must be a Fiat currency. Use the /conversion-rates endpoint to check which currencies are available
   /news:
     get:
       summary: /news
@@ -786,7 +786,7 @@ paths:
         - schema:
             type: string
           in: query
-          name: ids
+          name: id
           description: 'Optional: Comma seperated list of currency ids to limit the results to'
         - schema:
             type: string
@@ -811,7 +811,7 @@ paths:
         - schema:
             type: string
           in: query
-          name: symbols
+          name: symbol
           description: 'Optional: Comma seperated list of currency symbols to limit the results to'
       description: 'Returns a curated lists of the latest news items. '
     parameters: []
@@ -1205,7 +1205,7 @@ paths:
             default: all
           in: query
           name: source_type
-          description: 'Optional: A comme seperated list of the source_types to return. eg. Exchange, Project or Person'
+          description: 'Optional: A comme seperated list of the source_types to return. eg. exchange, project or person'
   /events:
     get:
       summary: /events
@@ -1460,7 +1460,7 @@ paths:
             type: string
           in: query
           name: currencies
-          description: List of currencies to return the exchange rate for
+          description: 'Optional: List of currencies to return the exchange rate for'
     parameters: []
 components:
   schemas: {}
