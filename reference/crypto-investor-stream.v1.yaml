@@ -46,6 +46,9 @@ paths:
                     type: string
                     description: the rank of the currency based on volume
                     example: '1'
+                  logo_url:
+                    type: string
+                    description: URL for the logo of the currency
               examples:
                 example:
                   value:
