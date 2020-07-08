@@ -229,15 +229,13 @@ paths:
         - schema:
             type: string
           in: query
-          name: ids
-          description: The id or ids of the currencies you want the metadata for
-          required: true
+          name: id
+          description: 'Optional: The id or a comma seperated list of ids of the currencies you want the metadata for'
         - schema:
             type: string
-            default: 'name,bio_short,bio_long,logo_url,hq_location,vertical,links,communities,symbol,rank'
           in: query
-          name: aux
-          description: Optionally specify a comma-separated list of data fields to return.
+          name: symbols
+          description: 'Optional: The symbol or a comma seperated list of symbols of the currencies you want the metadata for'
     parameters: []
   /currencies/ticker:
     get:
@@ -394,16 +392,11 @@ paths:
           description: 'Optional: Currency to convert the results in'
         - schema:
             type: string
-            default: 'id,symbol,price,price_date,circulating_supply,max_supply,logo_url,market_cap,rank,ath,ath_date,timeframe=1h,quote_currency=USD'
-          in: query
-          name: aux
-          description: 'Optional: specify a comma-separated list of data fields to return.'
-        - schema:
-            type: string
             default: 1h
           in: query
           name: timeframe
-          description: 'Enter a comma seperated list of time frames. Valid values are: 5m, 15m, 30m, 1h, 2h, 4h, 8h, 12h, 1d, 7d, 30d'
+          description: 'Enter a comma seperated list of time frames. Valid values are: 5m, 15m, 30m, 1h, 2h, 4h, 8h, 12h, 1d, 7d, 30d, 1Y, YTD'
+          required: true
         - schema:
             type: string
           in: query
@@ -421,7 +414,7 @@ paths:
           in: query
           name: start
           description: 'Optional: offset the start (1-based index) of the paginated list of items to return.'
-      description: 'Price, volume, market cap, and rank for all currencies across 5 minute, 15 minute, 30minute, 1 hour, 1 day, 7 day, 30 day, 365 day, and year to date intervals. Current prices are updated every minute'
+      description: 'Price, volume, market cap, and rank for all currencies across 5m, 15m, 30m, 1h, 2h, 4h, 8h, 12h, 1d, 7d, 30d, 1Y, YTD intervals. Current prices are updated every minute'
       requestBody:
         description: ''
   /exchanges:
@@ -563,12 +556,6 @@ paths:
           in: query
           name: limit
           description: 'Optional: The amount of results to return'
-        - schema:
-            type: string
-            default: 'id,name,country,active,region,last_update,blog,website,twitter,telegram,fees,rank,volume'
-          in: query
-          name: aux
-          description: Optionally specify a comma-separated list of supplemental data fields to return.
       tags:
         - Exchanges
   /market:
@@ -795,12 +782,12 @@ paths:
             default: en
           in: query
           name: region
-          description: 'Select the region/language to limit the results to. '
+          description: 'Optional: Select the region/language to limit the results to. '
         - schema:
             type: string
           in: query
           name: ids
-          description: List of currency ids to limit the results to
+          description: 'Optional: Comma seperated list of currency ids to limit the results to'
         - schema:
             type: string
             default: '10'
@@ -808,19 +795,24 @@ paths:
             minLength: 1
           in: query
           name: limit
-          description: Amount of news articles to limit the results to
+          description: 'Optional: Amount of news articles to limit the results to'
         - schema:
             type: string
           in: query
           name: verticals
-          description: List of vertical ids to limit the results to
+          description: 'Optional: List of vertical ids to limit the results to'
         - schema:
             type: string
             maxLength: 0
             minLength: 1
           in: query
           name: start
-          description: Optionally offset the start (1-based index) of the paginated list of items to return.
+          description: 'Optional: offset the start (1-based index) of the paginated list of items to return.'
+        - schema:
+            type: string
+          in: query
+          name: symbols
+          description: 'Optional: Comma seperated list of currency symbols to limit the results to'
       description: 'Returns a curated lists of the latest news items. '
     parameters: []
   /news/sources:
@@ -1105,7 +1097,7 @@ paths:
         - schema:
             type: string
           in: query
-          name: ids
+          name: id
           description: 'Optional: List of currency ids to limit results to.'
         - schema:
             type: string
@@ -1123,6 +1115,11 @@ paths:
           in: query
           name: limit
           description: 'Optional: Amount of news articles to limit the results to'
+        - schema:
+            type: string
+          in: query
+          name: symbol
+          description: 'Optional: Comma seperated list of currency symbols to limit the results to'
   /news/twitter-sources:
     get:
       summary: /news/twitter-sources
@@ -1185,12 +1182,16 @@ paths:
                       bio: The number one exchange
                       region: en
                       active: true
+                      source_type: Exchange
+                      twitter_id: 232345223
                     - id: '2'
                       name: Coinbase
                       username: '@coinbase'
                       bio: One of the most used entry level exchange
                       region: en
                       active: true
+                      source_type: Exchange
+                      twitter_id: 23234545533
       operationId: get-news-twitter-sources
       description: Return a list of sources used to receive tweets
       parameters:
@@ -1204,7 +1205,7 @@ paths:
             default: all
           in: query
           name: source_type
-          description: A comme seperated list of the source_types to return
+          description: 'Optional: A comme seperated list of the source_types to return. eg. Exchange, Project or Person'
   /events:
     get:
       summary: /events
@@ -1335,14 +1336,20 @@ paths:
       parameters:
         - schema:
             type: string
+            example: '01-01-2020,10-01-2020'
           in: query
           name: date
-          description: 'Optional: data to show events for'
+          description: 'Optional: data range to show events for.'
         - schema:
             type: string
           in: query
-          name: ids
-          description: 'Optional: List of currency ids to show events for'
+          name: id
+          description: 'Optional: a comma separated list of currency ids to show events for.'
+        - schema:
+            type: string
+          in: query
+          name: symbol
+          description: 'Optional: a comma separated list of currency symbols to show events for.'
   /events/categories:
     get:
       summary: /events/categories
