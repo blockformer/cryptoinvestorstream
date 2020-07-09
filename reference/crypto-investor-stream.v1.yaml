@@ -1378,9 +1378,9 @@ paths:
                       name: Burn
       operationId: get-events-categories
       description: Returns a list of event categories
-  /currency/verticals:
+  /currencies/verticals:
     get:
-      summary: /currency/verticals
+      summary: /currencies/verticals
       tags:
         - Currencies
       responses:
@@ -1409,6 +1409,7 @@ paths:
                       name: DeFi
       operationId: get-currency-verticals
       description: 'Returns a list of verticals a currency can belong to. '
+    parameters: []
   /currencies/exchange-rates:
     get:
       summary: /currencies/exchange-rates
@@ -1464,7 +1465,7 @@ paths:
     parameters: []
   /currencies/price-events:
     get:
-      summary: /currency/price-events
+      summary: /currencies/price-events
       tags: []
       responses:
         '200':
