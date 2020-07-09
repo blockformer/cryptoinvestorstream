@@ -1466,7 +1466,8 @@ paths:
   /currencies/price-events:
     get:
       summary: /currencies/price-events
-      tags: []
+      tags:
+        - Currencies
       responses:
         '200':
           description: OK
@@ -1527,7 +1528,8 @@ paths:
   /currencies/top-gainers:
     get:
       summary: /currencies/top-gainers
-      tags: []
+      tags:
+        - Currencies
       responses:
         '200':
           description: OK
@@ -1587,7 +1589,8 @@ paths:
   /currencies/top-losers:
     get:
       summary: /currencies/top-losers
-      tags: []
+      tags:
+        - Currencies
       responses:
         '200':
           description: OK
