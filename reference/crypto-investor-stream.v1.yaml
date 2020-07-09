@@ -1462,9 +1462,9 @@ paths:
           name: currencies
           description: 'Optional: List of currencies to return the exchange rate for'
     parameters: []
-  /currencies/events:
+  /currencies/price-events:
     get:
-      summary: Your GET endpoint
+      summary: /currency/price-events
       tags: []
       responses:
         '200':
@@ -1525,7 +1525,7 @@ paths:
     parameters: []
   /currencies/top-gainers:
     get:
-      summary: Your GET endpoint
+      summary: /currencies/top-gainers
       tags: []
       responses:
         '200':
@@ -1585,7 +1585,7 @@ paths:
     parameters: []
   /currencies/top-losers:
     get:
-      summary: Your GET endpoint
+      summary: /currencies/top-losers
       tags: []
       responses:
         '200':
