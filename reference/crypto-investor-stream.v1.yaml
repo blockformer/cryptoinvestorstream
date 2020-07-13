@@ -87,8 +87,8 @@ paths:
               - rank
             default: id
           in: query
-          name: sort
-          description: 'Optional: the value to sort the results on, valid option are: id and rank'
+          name: order_by
+          description: 'Optional: the value to order the results by, valid option are: id and rank'
         - schema:
             type: string
             default: '1'
@@ -548,8 +548,8 @@ paths:
             type: string
             default: id
           in: query
-          name: sort
-          description: 'Optional: the value to sort the results on, valid option are: id, rank, name'
+          name: order_by
+          description: 'Optional: the value to order the results by, valid option are: id, rank, name'
         - schema:
             type: string
           in: query
