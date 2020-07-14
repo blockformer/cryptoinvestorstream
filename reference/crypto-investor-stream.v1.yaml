@@ -1412,7 +1412,7 @@ paths:
                       name: Healthcare
                     - id: '3'
                       name: DeFi
-      operationId: get-currency-verticals
+      operationId: get-currencies-verticals
       description: 'Returns a list of verticals a currency can belong to. '
     parameters: []
   /currencies/exchange-rates:
@@ -1516,7 +1516,7 @@ paths:
                       symbol: BTC
                       logo_url: ''
                     event: 7d-high
-      operationId: get-market-top-movers
+      operationId: get-currencies-price-events
       description: List of top movers
       parameters:
         - schema:
@@ -1580,7 +1580,7 @@ paths:
                           marketcap: '23000222334'
                           price: '9434.23'
                       percent_change: '23'
-      operationId: get-currencies-gainers-losers
+      operationId: get-currencies-top-gainers
       description: Top gainers for a specifed timeframe
       parameters:
         - schema:
