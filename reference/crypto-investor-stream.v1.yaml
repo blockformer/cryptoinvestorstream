@@ -804,8 +804,8 @@ paths:
         - schema:
             type: string
           in: query
-          name: verticals
-          description: 'Optional: List of vertical ids to limit the results to'
+          name: vertical
+          description: 'Optional: Comma seperated list of vertical ids to limit the results to'
         - schema:
             type: string
             maxLength: 0
@@ -1343,8 +1343,13 @@ paths:
             type: string
             example: '01-01-2020,10-01-2020'
           in: query
-          name: date
-          description: 'Optional: data range to show events for.'
+          name: date_start
+          description: 'Optional: Date is greater than or equal to'
+        - schema:
+            type: string
+          in: query
+          name: date_end
+          description: 'Optional: Date is less than or equal to'
         - schema:
             type: string
           in: query
@@ -1353,7 +1358,7 @@ paths:
         - schema:
             type: string
           in: query
-          name: symbol
+          name: symbols
           description: 'Optional: a comma separated list of currency symbols to show events for.'
   /events/categories:
     get:
