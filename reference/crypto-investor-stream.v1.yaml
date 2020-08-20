@@ -804,8 +804,8 @@ paths:
         - schema:
             type: string
           in: query
-          name: vertical
-          description: 'Optional: Comma seperated list of vertical ids to limit the results to'
+          name: category
+          description: 'Optional: List of vertical ids to limit the results to'
         - schema:
             type: string
             maxLength: 0
@@ -818,6 +818,21 @@ paths:
           in: query
           name: symbol
           description: 'Optional: Comma seperated list of currency symbols to limit the results to'
+        - schema:
+            type: string
+          in: query
+          name: date_start
+          description: 'Optional: Start time to return twitter message for. format: YYYY-MM-DD'
+        - schema:
+            type: string
+          in: query
+          name: date_end
+          description: 'Optional: End time to return twitter message for. format: YYYY-MM-DD'
+        - schema:
+            type: string
+          in: query
+          name: tags
+          description: 'Optional: tag id or comma seperated list of tag ids to filter news on. Use the /news/tags endpoint to get the tag ids.'
       description: 'Returns a curated lists of the latest news items. '
     parameters: []
   /news/sources:
@@ -1107,8 +1122,8 @@ paths:
         - schema:
             type: string
           in: query
-          name: verticals
-          description: 'Optional: Limit the results to tweet from currencies in the specified verticals.'
+          name: category
+          description: 'Optional: Limit the results to tweet from currencies in the specified categories. Use the /news/categories endpoint to receive a list of category ids. '
         - schema:
             type: string
           in: query
@@ -1125,6 +1140,26 @@ paths:
           in: query
           name: symbol
           description: 'Optional: Comma seperated list of currency symbols to limit the results to'
+        - schema:
+            type: string
+          in: query
+          name: date_start
+          description: 'Optional: Start time to return twitter message for. format: YYYY-MM-DD'
+        - schema:
+            type: string
+          in: query
+          name: date_end
+          description: 'Optional: End time to return twitter message for. format: YYYY-MM-DD'
+        - schema:
+            type: string
+          in: query
+          name: tags
+          description: 'Optional: tag id or comma seperated list of tag ids to filter twitter messages on. Use the /news/tags endpoint to get the tag ids.'
+        - schema:
+            type: string
+          in: query
+          name: region
+          description: 'Optional: The region or list of regions to return twitter messages for. Supported regions are: '
   /news/twitter-sources:
     get:
       summary: /news/twitter-sources
@@ -1343,12 +1378,12 @@ paths:
             type: string
             example: '01-01-2020,10-01-2020'
           in: query
-          name: date_start
+          name: date_from
           description: 'Optional: Date is greater than or equal to'
         - schema:
             type: string
           in: query
-          name: date_end
+          name: date_to
           description: 'Optional: Date is less than or equal to'
         - schema:
             type: string
